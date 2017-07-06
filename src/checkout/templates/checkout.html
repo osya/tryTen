@@ -2,42 +2,79 @@
 
 {% block script %}
     <script type="text/javascript">
-        Stripe.setPublishableKey('{{ publish_key }}');
-        function stripeResponseHandler(status, response) {
-            // Grab the form
-            var $form = $('#payment-form');
-            if (response.error) {   // Problem!
-                // Show the errors on the form:
-                $form.find('.payment-errors').text(response.error.message);
-                $form.find('.submit').prop('disabled', false);  // Re-enable submission
-            } else {    // Token was created!
-                // Get the toke ID
-                var token = response.id;
+        // Create a Stripe client
+        var stripe = Stripe('{{ publish_key }}');
 
-                // Insert the token ID into the form so it gets submitted to the server:
-                $form.append($('<input type="hidden" name="stripeToken">').val(token));
-
-                // Submit the form
-                $form.get(0).submit();
+        // Custom styling can be passed to options when creating an Element.
+        // (Note that this demo uses a wider set of styles than the guide below.)
+        var style = {
+          base: {
+            color: '#32325d',
+            lineHeight: '24px',
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+              color: '#aab7c4'
             }
-        }
-    </script>
-{% endblock %}
+          },
+          invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+          }
+        };
 
-{% block jquery %}
-    $(function() {
-        var $form = $('#payment-form');
-        $form.submit(function(event) {;
-            // Disable teh submit button to prevent repeated clicks:
-            $form.find('.submit').prop('disabled', true);
+        $(document).ready(function(){
+            // Create an instance of Elements
+            var elements = stripe.elements();
 
-            // Request a token from Stripe:
-            Stripe.card.createToken($form, stripeResponseHandler);
+            // Create an instance of the card Element
+            var card = elements.create('card', {style: style, hidePostalCode: true});
 
-            // Prevent the form from being submitted:
-            return false;
+            // Add an instance of the card Element into the `card-element` <div>
+            card.mount('#card-element');
+
+            // Handle real-time validation errors from the card Element.
+            card.addEventListener('change', function(event) {
+              var displayError = document.getElementById('card-errors');
+              if (event.error) {
+                displayError.textContent = event.error.message;
+              } else {
+                displayError.textContent = '';
+              }
+            });
+
+            // Handle form submission
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function(event) {
+              event.preventDefault();
+
+              stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                  // Inform the user if there was an error
+                  var errorElement = document.getElementById('card-errors');
+                  errorElement.textContent = result.error.message;
+                } else {
+                  // Send the token to your server
+                  stripeTokenHandler(result.token);
+                }
+              });
+            });
+
+            function stripeTokenHandler(token) {
+              // Insert the token ID into the form so it gets submitted to the server
+              var form = document.getElementById('payment-form');
+              var hiddenInput = document.createElement('input');
+              hiddenInput.setAttribute('type', 'hidden');
+              hiddenInput.setAttribute('name', 'stripeToken');
+              hiddenInput.setAttribute('value', token.id);
+              form.appendChild(hiddenInput);
+
+              // Submit the form
+              form.submit();
+            }
         });
-    });
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -45,31 +82,20 @@
     <div class="col-sm-6 col-sm-offset-3">
         <form class="form" action="" method="POST" id="payment-form">
             {% csrf_token %}
-            <span class="payment-errors"></span>
-            <div class="form-row">
-                <label>
-                    <span>Card Number</span>
-                    <input class="form-control" type="text" size="20" data-stripe="number">
-                </label>
-            </div>
 
             <div class="form-row">
-                <label>
-                    <span>Expiration (MM/YY)</span>
-                    <input type="text" size="2" data-stripe="exp_month">
+                <label for="card-element">
+                  Credit or debit card
                 </label>
-                <span> / </span>
-                <input type="text" size="2" data-stripe="exp_year">
+                <div id="card-element">
+                  <!-- a Stripe Element will be inserted here. -->
+                </div>
+
+                <!-- Used to display form errors -->
+                <div id="card-errors" role="alert"></div>
             </div>
 
-            <div class="form-row">
-                <label>
-                    <span>CVC</span>
-                    <input type="text" size="4" data-stripe="cvc">
-                </label>
-            </div>
-
-            <input class="btn btn-success" type="submit" class="submit" value="Submit Payment">
+            <button class="btn btn-success">Submit Payment</button>
         </form>
     </div>
     </div>
