@@ -30,7 +30,7 @@ SECRET_KEY = 'v5quzdf_waaq8)$^)udv804ap)hf1uo-=##g!p6o&8-8l=3wfg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['tryten.herokuapp.com']
 
 
 # Application definition
