@@ -2,6 +2,8 @@
 import os
 import sys
 
+# TODO: add Django tests
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tryTen.settings")
     try:
