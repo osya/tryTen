@@ -1,4 +1,6 @@
-django
-django-crispy-forms
-django-allauth
-stripe
+Django==1.11.3
+django-crispy-forms==1.6.1
+django-allauth==0.32.0
+dj-database-url==0.4.2
+stripe==1.62.0
+psycopg2==2.7.1
