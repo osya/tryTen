@@ -10,7 +10,7 @@
             {% if form %}
             <form method='POST' action=''> {% csrf_token %}
                 {{ form|crispy }}
-                <input type='submit' value='submit form' class='btn btn-default'/>
+                <button class="btn btn-success">Submit</button>
             </form>
             {% endif %}
         </div>
