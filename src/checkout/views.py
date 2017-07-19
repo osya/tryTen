@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -21,4 +21,4 @@ def checkout(request):
             customer=customer,
             description="Example charge"
         )
-    return render_to_response('checkout.html', {'publish_key': publish_key})
+    return render(request, 'checkout.html', {'publish_key': publish_key})
