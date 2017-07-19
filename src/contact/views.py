@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render_to_response
 from .forms import contactForm
 from django.core.mail import send_mail
 from django.conf import settings
@@ -20,5 +20,4 @@ def contact(request):
         confirm_message = 'Thanks for the message. We will get right back to you'
         form = None
     context = {'title': title, 'form': form, 'confirm_message': confirm_message}
-    template = 'contact.html'
-    return render(request, template, context)
+    return render_to_response('contact.html', context)
