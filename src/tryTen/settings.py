@@ -37,21 +37,21 @@ ALLOWED_HOSTS = ['tryten.herokuapp.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'profiles',
+    'contact',
+    'checkout',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'src.profiles',
-    'src.contact',
     'crispy_forms',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'src.checkout',
-    'stripe'
+    'stripe',
 ]
 
 MIDDLEWARE = [
