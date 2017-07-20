@@ -24,6 +24,7 @@
         <option value="$MODULE_DIR$/src/contact/templates" />
         <option value="$MODULE_DIR$/src/profiles/templates" />
         <option value="$MODULE_DIR$/src/checkout/templates" />
+        <option value="$MODULE_DIR$/src/templates" />
       </list>
     </option>
   </component>
