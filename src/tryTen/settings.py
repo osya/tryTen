@@ -36,23 +36,28 @@ ALLOWED_HOSTS = ['tryten.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
-INSTALLED_APPS = [
-    'profiles',
-    'contact',
-    'checkout',
+DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+)
+THIRD_PARTY_APPS = (
     'crispy_forms',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'stripe',
-]
+)
+LOCAL_APPS = (
+    'profiles',
+    'contact',
+    'checkout',
+)
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
