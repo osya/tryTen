@@ -28,8 +28,7 @@ urlpatterns = [
     url(r'^about/$', views.AboutView.as_view(), name='about'),
     url(r'^profile/$', profiles_views.ProfileView.as_view(), name='profile'),
     url(r'^checkout/$', checkout_views.checkout, name='checkout'),
-    # url(r'^contact/$', contact_vies.ContactView.as_view(), name='contact'),
-    url(r'^contact/$', contact_vies.contact, name='contact'),
+    url(r'^contact/$', contact_vies.ContactView.as_view(), name='contact'),
     url(r'^accounts/', include('allauth.urls')),
 ]
 
