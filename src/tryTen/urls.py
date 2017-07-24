@@ -20,12 +20,12 @@ from django.contrib import admin
 from src.profiles import views as profiles_vies
 from src.contact import views as contact_vies
 from src.checkout import views as checkout_views
-from .views import HomePageView
+from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', HomePageView.as_view(), name='home'),
-    url(r'^about/$', profiles_vies.about, name='about'),
+    url(r'^$', views.HomePageView.as_view(), name='home'),
+    url(r'^about/$', views.AboutPageView.as_view(), name='about'),
     url(r'^profile/$', profiles_vies.user_profile, name='profile'),
     url(r'^checkout/$', checkout_views.checkout, name='checkout'),
     # url(r'^contact/$', contact_vies.ContactView.as_view(), name='contact'),
