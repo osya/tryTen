@@ -53,9 +53,9 @@ THIRD_PARTY_APPS = (
     'stripe',
 )
 LOCAL_APPS = (
-    'profiles',
     'contact',
     'checkout',
+    'profiles',
 )
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -69,7 +69,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'src.tryTen.urls'
+ROOT_URLCONF = 'tryTen.urls'
 
 TEMPLATES = [
     {

@@ -1,0 +1,14 @@
+{% extends "_layouts/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block headline %}
+    <h1>Profile</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            {% crispy object %}
+        </div>
+    </div>
+{% endblock %}

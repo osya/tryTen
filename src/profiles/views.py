@@ -1,7 +1,13 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from braces import views
+from django.contrib.auth.models import User
+from django.views import generic
+from profiles.forms import ProfileForm
 
 
-@login_required()
-def user_profile(request):
-    return render(request, 'profiles/profile.html', {'user': request.user})
+class ProfileView(views.LoginRequiredMixin, generic.DetailView):
+    template_name = 'profiles/profile_detail.html'
+    form_class = ProfileForm
+
+    def get_object(self):
+        profile = User.objects.get(pk=self.request.session['_auth_user_id']).profile
+        return ProfileForm(instance=profile)

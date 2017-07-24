@@ -17,16 +17,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url, include
 from django.contrib import admin
-from src.profiles import views as profiles_vies
-from src.contact import views as contact_vies
-from src.checkout import views as checkout_views
+from profiles import views as profiles_views
+from contact import views as contact_vies
+from checkout import views as checkout_views
 from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.HomePageView.as_view(), name='home'),
-    url(r'^about/$', views.AboutPageView.as_view(), name='about'),
-    url(r'^profile/$', profiles_vies.user_profile, name='profile'),
+    url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^about/$', views.AboutView.as_view(), name='about'),
+    url(r'^profile/$', profiles_views.ProfileView.as_view(), name='profile'),
     url(r'^checkout/$', checkout_views.checkout, name='checkout'),
     # url(r'^contact/$', contact_vies.ContactView.as_view(), name='contact'),
     url(r'^contact/$', contact_vies.contact, name='contact'),
