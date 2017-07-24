@@ -21,4 +21,4 @@ def checkout(request):
             customer=customer,
             description="Example charge"
         )
-    return render(request, 'checkout.html', {'publish_key': publish_key})
+    return render(request, 'checkout/checkout.html', {'publish_key': publish_key})

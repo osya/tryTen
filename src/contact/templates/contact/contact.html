@@ -1,9 +1,10 @@
 {% extends '_layouts/base.html' %}
 {% load crispy_forms_tags %}
+
 {% block content %}
     <div class='row'>
         <div class='col-sm-6 col-sm-offset-3'>
-            <h1>{{title}}</h1>
+            <h1>{{ headline }}</h1>
             {% if confirm_message %}
                 <p>{{ confirm_message }}</p>
             {% endif %}
