@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^$', views.HomeView.as_view(), name='home'),
     url(r'^about/$', views.AboutView.as_view(), name='about'),
     url(r'^profile/$', profiles_views.ProfileView.as_view(), name='profile'),
-    url(r'^checkout/$', checkout_views.checkout, name='checkout'),
+    url(r'^checkout/$', checkout_views.CheckoutView.as_view(), name='checkout'),
     url(r'^contact/$', contact_vies.ContactView.as_view(), name='contact'),
     url(r'^accounts/', include('allauth.urls')),
 ]
