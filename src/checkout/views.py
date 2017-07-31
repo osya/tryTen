@@ -1,13 +1,23 @@
 import stripe
 from django.conf import settings
+from django.urls import reverse
 from django.views import generic
 from braces import views
+from checkout.forms import CheckoutForm
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class CheckoutView(views.LoginRequiredMixin, generic.TemplateView):
+    """
+    CheckoutView based on TemplateView
+    """
     template_name = 'checkout/checkout.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CheckoutView, self).get_context_data(**kwargs)
+        context["publish_key"] = settings.STRIPE_PUBLISHABLE_KEY
+        return context
 
     def post(self, request, *args, **kwargs):
         token = request.POST.get('stripeToken')
@@ -16,14 +26,39 @@ class CheckoutView(views.LoginRequiredMixin, generic.TemplateView):
         customer.sources.create(source=token)
         # Charge the user's card:
         charge = stripe.Charge.create(
-            amount=1000,
-            currency="eur",
-            customer=customer,
-            description="Example charge"
+                amount=1000,
+                currency="eur",
+                customer=customer,
+                description="Example charge"
         )
         return self.get(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(CheckoutView, self).get_context_data(**kwargs)
-        context["publish_key"] = settings.STRIPE_PUBLISHABLE_KEY
-        return context
+
+# class CheckoutView(views.LoginRequiredMixin, generic.FormView):
+#     """
+#     CheckoutView based on FormView
+#     """
+#     template_name = 'checkout/checkout.html'
+#     form_class = CheckoutForm
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(CheckoutView, self).get_context_data(**kwargs)
+#         context["publish_key"] = settings.STRIPE_PUBLISHABLE_KEY
+#         return context
+#
+#     def form_valid(self, form):
+#         token = form.cleaned_data['stripeToken']
+#         customer_id = self.request.user.userstripe.stripe_id
+#         customer = stripe.Customer.retrieve(customer_id)
+#         customer.sources.create(source=token)
+#         # Charge the user's card:
+#         charge = stripe.Charge.create(
+#             amount=1000,
+#             currency="eur",
+#             customer=customer,
+#             description="Example charge"
+#         )
+#         return super(CheckoutView, self).form_valid(form)
+#
+#     def get_success_url(self):
+#         return reverse('checkout')
