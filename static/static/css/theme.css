@@ -1,6 +1,7 @@
 body {
   padding-top: 70px;
   padding-bottom: 30px;
+  background: white url('../img/background.png');
 }
 
 .theme-dropdown .dropdown-menu {
