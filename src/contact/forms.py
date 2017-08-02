@@ -17,5 +17,5 @@ class ContactForm(forms.Form):
                 'name',
                 'email',
                 'comment',
-                ButtonHolder(Submit('submit', 'Submit', css_class='btn btn-success'))
+                ButtonHolder(Submit('submit', 'Submit', css_class='btn btn-default'))
         )

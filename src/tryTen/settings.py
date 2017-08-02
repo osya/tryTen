@@ -159,10 +159,10 @@ if DEBUG:
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+# for allauth
+
 SITE_ID = 1
 
-# LOGIN_URL = '/accounts/login/*'
-# LOGIN_URL = 'tryTen.views.sign_in'
 LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/'
 

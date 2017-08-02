@@ -1,5 +1,3 @@
-{% load staticfiles %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,6 +11,7 @@
 
     <title>tryTen</title>
 
+    {% load staticfiles %}
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
     <!-- Bootstrap theme -->
@@ -36,11 +35,13 @@
         {% block headline %}{% endblock %}
 
         {% if messages %}
-        <ul class="list-unstyled messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
+        <div>
+            <ul class="list-unstyled messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
         {% endif %}
 
         {% block content %}

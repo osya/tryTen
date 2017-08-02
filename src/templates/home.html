@@ -31,19 +31,21 @@
             {% if request.user.is_authenticated %}
                 <h3>Hello, {{ request.user }}</h3>
             {% else %}
-              <form class="login" method="POST" action="{% url 'account_login' %}" _lpchecked="1">
-                {% csrf_token %}
-                <div id="div_id_login" class="form-group"> <label for="id_login" class="control-label  requiredField">
-                    Login<span class="asteriskField">*</span> </label> <div class="controls "> <input type="text" name="login" placeholder="Username or e-mail" autofocus="autofocus" class="textinput textInput form-control" required="" id="id_login" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAZdJREFUOBGVVD2LwkAQfTEHfhTXqIXggY0KNoKtEBBsDv0Zh0JI5w9Qf4bXWPkHBPHqWKq1CFaeWImIwS8w5Hai2UskxLiw2Zk3b97uziwR2u32p2EYHTY/4GMIgvDLaLVWq/VD9MAryZRw3+ibbBok4GvnG/32tecE7IFndiQSQSaTcdBeEkilUiiXy+4CoVCIB4LBIFixuG+PcfBuvNFarVZRKBTQ6/Ww3W4hyzLW6zW63a4j9phM/ktXcBMQms2mQQE65vl8Njl0hcvl4sbnGLviijl1fgIrmRjPkonDWplkS8esAQFeI51OQ5IkxGIxLJdLDAYD7Pd7U4SfwEugWCwiGo1iNBohm80il8txeuD+tjngZsxmM4TDYeTzeRyPRywWC04jgfozkd1uB13XEY/HzTafTicu8P9aOHQzrO6Q12g0sNls0O/3oSgKJpMJhsOhSfRVg8PhgEQigUqlAlEUQb41RMt4XEul0hfD3gmfz+e4Xq/mnE6nGI/H1AF67iuvNlJt6EeT1DQNqqo69qBkBtT/ANzCmpZx1xTXAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: pointer;" autocomplete="off"> </div> </div> <div id="div_id_password" class="form-group"> <label for="id_password" class="control-label  requiredField">
-                    Password<span class="asteriskField">*</span> </label> <div class="controls "> <input type="password" name="password" placeholder="Password" class="textinput textInput form-control" required="" id="id_password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAZdJREFUOBGVVD2LwkAQfTEHfhTXqIXggY0KNoKtEBBsDv0Zh0JI5w9Qf4bXWPkHBPHqWKq1CFaeWImIwS8w5Hai2UskxLiw2Zk3b97uziwR2u32p2EYHTY/4GMIgvDLaLVWq/VD9MAryZRw3+ibbBok4GvnG/32tecE7IFndiQSQSaTcdBeEkilUiiXy+4CoVCIB4LBIFixuG+PcfBuvNFarVZRKBTQ6/Ww3W4hyzLW6zW63a4j9phM/ktXcBMQms2mQQE65vl8Njl0hcvl4sbnGLviijl1fgIrmRjPkonDWplkS8esAQFeI51OQ5IkxGIxLJdLDAYD7Pd7U4SfwEugWCwiGo1iNBohm80il8txeuD+tjngZsxmM4TDYeTzeRyPRywWC04jgfozkd1uB13XEY/HzTafTicu8P9aOHQzrO6Q12g0sNls0O/3oSgKJpMJhsOhSfRVg8PhgEQigUqlAlEUQb41RMt4XEul0hfD3gmfz+e4Xq/mnE6nGI/H1AF67iuvNlJt6EeT1DQNqqo69qBkBtT/ANzCmpZx1xTXAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off"> </div> </div> <div class="form-group"> <div id="div_id_remember" class="checkbox"> <label for="id_remember" class=""> <input type="checkbox" name="remember" class="checkboxinput" id="id_remember">
-                        Remember Me
-                    </label>
-                </div>
-                </div>
-                <a class="btn btn-link button secondaryAction" href="{% url 'account_reset_password' %}">Forgot Password?</a>
-                <a class="btn btn-link button secondaryAction" href="{% url 'account_signup' %}">Signup</a>
-                <button class="btn btn-default primaryAction" type="submit">Sign In</button>
-              </form>
+                <form class="login" method="POST" action="{% url 'account_login' %}" _lpchecked="1">
+                    {% csrf_token %}
+                    <div id="div_id_login" class="form-group"> <label for="id_login" class="control-label  requiredField">
+                        Login<span class="asteriskField">*</span> </label> <div class="controls "> <input type="text" name="login" placeholder="Username or e-mail" autofocus="autofocus" class="textinput textInput form-control" required="" id="id_login" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAZdJREFUOBGVVD2LwkAQfTEHfhTXqIXggY0KNoKtEBBsDv0Zh0JI5w9Qf4bXWPkHBPHqWKq1CFaeWImIwS8w5Hai2UskxLiw2Zk3b97uziwR2u32p2EYHTY/4GMIgvDLaLVWq/VD9MAryZRw3+ibbBok4GvnG/32tecE7IFndiQSQSaTcdBeEkilUiiXy+4CoVCIB4LBIFixuG+PcfBuvNFarVZRKBTQ6/Ww3W4hyzLW6zW63a4j9phM/ktXcBMQms2mQQE65vl8Njl0hcvl4sbnGLviijl1fgIrmRjPkonDWplkS8esAQFeI51OQ5IkxGIxLJdLDAYD7Pd7U4SfwEugWCwiGo1iNBohm80il8txeuD+tjngZsxmM4TDYeTzeRyPRywWC04jgfozkd1uB13XEY/HzTafTicu8P9aOHQzrO6Q12g0sNls0O/3oSgKJpMJhsOhSfRVg8PhgEQigUqlAlEUQb41RMt4XEul0hfD3gmfz+e4Xq/mnE6nGI/H1AF67iuvNlJt6EeT1DQNqqo69qBkBtT/ANzCmpZx1xTXAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: pointer;" autocomplete="off"> </div> </div> <div id="div_id_password" class="form-group"> <label for="id_password" class="control-label  requiredField">
+                        Password<span class="asteriskField">*</span> </label> <div class="controls "> <input type="password" name="password" placeholder="Password" class="textinput textInput form-control" required="" id="id_password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAZdJREFUOBGVVD2LwkAQfTEHfhTXqIXggY0KNoKtEBBsDv0Zh0JI5w9Qf4bXWPkHBPHqWKq1CFaeWImIwS8w5Hai2UskxLiw2Zk3b97uziwR2u32p2EYHTY/4GMIgvDLaLVWq/VD9MAryZRw3+ibbBok4GvnG/32tecE7IFndiQSQSaTcdBeEkilUiiXy+4CoVCIB4LBIFixuG+PcfBuvNFarVZRKBTQ6/Ww3W4hyzLW6zW63a4j9phM/ktXcBMQms2mQQE65vl8Njl0hcvl4sbnGLviijl1fgIrmRjPkonDWplkS8esAQFeI51OQ5IkxGIxLJdLDAYD7Pd7U4SfwEugWCwiGo1iNBohm80il8txeuD+tjngZsxmM4TDYeTzeRyPRywWC04jgfozkd1uB13XEY/HzTafTicu8P9aOHQzrO6Q12g0sNls0O/3oSgKJpMJhsOhSfRVg8PhgEQigUqlAlEUQb41RMt4XEul0hfD3gmfz+e4Xq/mnE6nGI/H1AF67iuvNlJt6EeT1DQNqqo69qBkBtT/ANzCmpZx1xTXAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off"> </div> </div> <div class="form-group"> <div id="div_id_remember" class="checkbox"> <label for="id_remember" class=""> <input type="checkbox" name="remember" class="checkboxinput" id="id_remember">
+                            Remember Me
+                        </label>
+                    </div>
+                    </div>
+                    <a class="btn btn-link button secondaryAction" href="{% url 'account_reset_password' %}">Forgot Password?</a>
+                    <a class="btn btn-link button secondaryAction" href="{% url 'account_signup' %}">Signup</a>
+                    <button class="btn btn-default primaryAction" type="submit">
+                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign In
+                    </button>
+                </form>
             {% endif %}
         </div>
       </div>
