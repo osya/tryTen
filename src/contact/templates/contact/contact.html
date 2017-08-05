@@ -1,10 +1,13 @@
 {% extends '_layouts/base.html' %}
 {% load crispy_forms_tags %}
 
+{% block title %}Contact{% endblock %}
+
+{% block headline %}<h2>Contact</h2>{% endblock %}
+
 {% block content %}
     <div class='row'>
         <div class='col-sm-6 col-sm-offset-3'>
-            <h1>Contact</h1>
             {% if confirm_message %}
                 <p>{{ confirm_message }}</p>
             {% endif %}

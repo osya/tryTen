@@ -35,3 +35,6 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# TODO: Implement 2FA & update corresponding Cover letter
+# TODO: Implement TBA using django-allauth & update corresponding Cover letter
