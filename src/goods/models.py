@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 
 
@@ -27,3 +28,6 @@ class Good(models.Model):
 
     def get_is_stock(self):
         return '+' if self.in_stock else ''
+
+    def get_absolute_url(self):
+        return reverse('goods:detail', kwargs={'pk': self.pk})

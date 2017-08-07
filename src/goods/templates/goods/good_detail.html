@@ -3,11 +3,11 @@
 {% block title %}{{ object.name }} :: {{ block.super }}{% endblock %}
 
 {% block good_headline %}
-    <a href="{% url 'goods:good' object.id %}">{{ object.name }}</a> ::
+    <a href="{% url 'goods:detail' object.id %}">{{ object.name }}</a> ::
 {% endblock %}
 
 {% block main %}
     <p>{{ object.description|linebreaksbr }}</p>
     <p class="not-in-stock">{% if not object.in_stock %}Out of stock!{% endif %}</p>
-    <p><a href="{% url 'goods:list' category.id page %}">Back</a></p>
+    <p><a href="{% url 'goods:list' cat_id=category.id page %}">Back</a></p>
 {% endblock %}

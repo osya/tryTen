@@ -1,18 +1,21 @@
 from django.views import generic
+from braces import views
 
 from .models import Category, Good
+from .forms import GoodForm
 
 
-class CategoryMixin(generic.base.ContextMixin):
+class PageCategory2ContextMixin(generic.base.ContextMixin):
     def get_context_data(self, **kwargs):
-        context = super(CategoryMixin, self).get_context_data(**kwargs)
+        context = super(PageCategory2ContextMixin, self).get_context_data(**kwargs)
+        context['cats'] = Category.objects.order_by('name')
         cat_id = self.kwargs.get('cat_id')
         context['category'] = Category.objects.get(pk=cat_id) if cat_id else Category.objects.first()
-        context['cats'] = Category.objects.all()
+        context['page'] = self.request.GET.get('page', 1)
         return context
 
 
-class GoodList(CategoryMixin, generic.ListView):
+class GoodList(PageCategory2ContextMixin, generic.ListView):
     model = Good
     paginate_by = 10
 
@@ -22,10 +25,34 @@ class GoodList(CategoryMixin, generic.ListView):
         return queryset.filter(category=cat_id)
 
 
-class GoodDetail(CategoryMixin, generic.DetailView):
+class GoodDetail(PageCategory2ContextMixin, generic.DetailView):
     model = Good
 
-    def get_context_data(self, **kwargs):
-        context = super(GoodDetail, self).get_context_data(**kwargs)
+
+class GoodCreate(views.SetHeadlineMixin, generic.CreateView):
+    model = Good
+    headline = 'Add Good'
+    form_class = GoodForm
+
+    def get(self, request, *args, **kwargs):
+        self.initial['category'] = self.kwargs.get('pk') or Category.objects.first().id
+        return super(GoodCreate, self).get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        url = super(GoodCreate, self).get_success_url()
+        page = self.request.GET.get('page')
+        if page:
+            from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
+            url_parts = list(urlparse(url))
+            query = dict(parse_qsl(url_parts[4]))
+            query['page'] = page
+            url_parts[4] = urlencode(query)
+            url = urlunparse(url_parts)
+        return url
+
+    def get_context_data(self):
+        context = super(GoodCreate, self).get_context_data()
+        cat_id = self.kwargs.get('cat_id')
+        context['category'] = Category.objects.get(pk=cat_id) if cat_id else Category.objects.first()
         context['page'] = self.request.GET.get('page', 1)
         return context
