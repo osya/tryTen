@@ -1,0 +1,40 @@
+{% extends 'goods/base_goods.html' %}
+
+{% block main %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>In stock</th>
+        </tr>
+        {% for good in good_list %}
+            <tr>
+                <td><a href="{% url 'goods:good' good.id %}?page={{ page_obj.number }}">{{ good.name }}</a></td>
+                <td class="centered">{{ good.get_is_stock }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'goods:list' category.id page_obj.previous_page_number %}">&lt;</a>
+                {% endif %}
+                {% for pn in paginator.page_range %}
+                    {% if not forloop.first %}
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                    {% endif %}
+                    {% if page_obj.number != pn %}
+                        <a href="{% url 'goods:list' category.id pn %}">
+                    {% endif %}
+                    {{ pn }}
+                    {% if page_obj.number != pn %}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <a href="{% url 'goods:list' category.id page_obj.next_page_number %}">&gt;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

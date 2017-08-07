@@ -11,43 +11,41 @@
       <a class="navbar-brand" href="{% url 'home' %}">tryTen</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        {% url 'home' as home %}
-        {% url 'about' as about %}
-        {% url 'contact' as contact %}
-        {% url 'profile' as profile %}
-        {% url 'checkout' as checkout %}
-        <li {% if request.path == home %} class="active" {% endif %}><a href="{% url 'home' %}">Home</a></li>
-        <li {% if request.path == about %} class="active" {% endif %}><a href="{% url 'about' %}">About</a></li>
-        <li {% if request.path == contact %} class="active" {% endif %}><a href="{% url 'contact' %}">Contact</a></li>
-        {% if request.user.is_authenticated %}
-            <li {% if request.path == checkout %} class="active" {% endif %}><a href="{% url 'checkout' %}">Checkout</a></li>
-        {% endif %}
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-              {% if request.user.is_authenticated %}
-                <li {% if request.path == profile %} class="active" {% endif %}><a href="{% url 'profile' %}">Profile</a></li>
-                <li>
-                    <a href="{% url 'account_logout' %}">
-                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
-                    </a>
-                </li>
-              {% else %}
-                <li>
-                    <a href="{% url 'account_login' %}">
-                       <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Login
-                    </a>
-                </li>
-                <li><a href="{% url 'account_signup' %}">Signup</a></li>
-              {% endif %}
-            <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Nav header</li>
-            <li><a href="#">Separated link</a></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
+        <ul class="nav navbar-nav">
+            {% url 'home' as home %}
+            {% url 'profile' as profile %}
+            {% url 'checkout' as goods %}
+            {% url 'about' as about %}
+            {% url 'contact' as contact %}
+            <li {% if request.path == home %} class="active" {% endif %}><a href="{% url 'home' %}">Home</a></li>
+            {% if request.user.is_authenticated %}
+                <li {% if request.path == checkout %} class="active" {% endif %}><a href="{% url 'checkout' %}">Checkout</a></li>
+            {% endif %}
+            <li {% if request.path == about %} class="active" {% endif %}><a href="{% url 'about' %}">About</a></li>
+            <li {% if request.path == contact %} class="active" {% endif %}><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    {% if request.user.is_authenticated %}
+                        <li {% if request.path == profile %} class="active" {% endif %}><a href="{% url 'profile' %}">{{ request.user }}'s Profile</a></li>
+                        <li>
+                            <a href="{% url 'account_logout' %}">
+                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'account_login' %}">
+                               <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Login
+                            </a>
+                        </li>
+                        <li><a href="{% url 'account_signup' %}">Signup</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+        </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>

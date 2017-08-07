@@ -20,16 +20,18 @@ from django.contrib import admin
 from profiles import views as profiles_views
 from contact import views as contact_vies
 from checkout import views as checkout_views
+from goods import views as goods_views
 from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^goods/', include('goods.urls', namespace='goods')),
     url(r'^about/$', views.AboutView.as_view(), name='about'),
     url(r'^profile/$', profiles_views.ProfileView.as_view(), name='profile'),
     url(r'^checkout/$', checkout_views.CheckoutView.as_view(), name='checkout'),
     url(r'^contact/$', contact_vies.ContactView.as_view(), name='contact'),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^(?:category/(?P<pk>\d+)/)?(?:page/(?P<page>\d+))?$', goods_views.GoodList.as_view(), name='home'),
 ]
 
 if settings.DEBUG:

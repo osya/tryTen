@@ -1,0 +1,27 @@
+{% extends '_layouts/base.html' %}
+
+{% block title %}{{ category.name }} :: Все для уборки{% endblock %}
+
+{% block headline %}
+    <div id="header">
+        <h2>{% block good_headline %}{% endblock %}<a href="{% url 'goods:list' category.id %}">{{ category.name }}</a> :: Все для уборки</h2>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div id="left_menu">
+        {% if cats.count > 0 %}
+            <ul>
+                {% for cat in cats %}
+                    <li><a href="{% url 'goods:list' cat.id %}">{{ cat.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Categories list is empty</p>
+        {% endif %}
+    </div>
+    <div id="main">
+        {% block main %}
+        {% endblock %}
+    </div>
+{% endblock %}
