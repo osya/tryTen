@@ -18,6 +18,6 @@ class GoodForm(forms.ModelForm):
         self.helper.layout = Layout(
                 'name', 'description', 'category', 'in_stock', 'price',
                 ButtonHolder(
-                        Submit('create', 'Create', css_class='btn btn-default')
+                        Submit('submit', 'Submit', css_class='btn btn-default')
                 )
         )

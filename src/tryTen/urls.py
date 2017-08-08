@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^checkout/$', checkout_views.CheckoutView.as_view(), name='checkout'),
     url(r'^contact/$', contact_vies.ContactView.as_view(), name='contact'),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^(?:category/(?P<pk>\d+)/)?(?:page/(?P<page>\d+))?$', goods_views.GoodList.as_view(), name='home'),
+    url(r'^$', goods_views.GoodList.as_view(), name='home'),
 ]
 
 if settings.DEBUG:
@@ -40,3 +40,4 @@ if settings.DEBUG:
 
 # TODO: Implement 2FA & update corresponding Cover letter
 # TODO: Implement TBA using django-allauth & update corresponding Cover letter
+# TODO: Implement dependencies (Bootsrap) installation via Bower or Webpack

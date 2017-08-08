@@ -26,9 +26,9 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% url 'goods:list' as home %}
-            {% if request.user.is_authenticated and category%}
+            {% if request.user.is_authenticated and category %}
                 <li class="active">
-                    <a href="{% url 'goods:create' cat_id=category.id %}?page={{ page_obj.number }}">
+                    <a href="{% url 'goods:create'%}?cat_id={{ category.id }}{% if page_obj.number > 1 %}&page={{ page_obj.number }}{% endif %}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Good
                     </a>
                 </li>

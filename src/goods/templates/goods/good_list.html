@@ -8,7 +8,7 @@
         </tr>
         {% for good in good_list %}
             <tr>
-                <td><a href="{% url 'goods:detail' good.id %}?page={{ page_obj.number }}">{{ good.name }}</a></td>
+                <td><a href="{% url 'goods:detail' good.id %}{% if page_obj.number > 1 %}?page={{ page_obj.number }}{% endif %}">{{ good.name }}</a></td>
                 <td class="centered">{{ good.get_is_stock }}</td>
             </tr>
         {% endfor %}
@@ -17,14 +17,14 @@
         <div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
-                    <a href="{% url 'goods:list' category.id page_obj.previous_page_number %}">&lt;</a>
+                    <a href="{% url 'goods:list' %}?cat_id={{ category.id }}{% if page_obj.previous_page_number > 1 %}&page={{ page_obj.previous_page_number }}{% endif %}">&lt;</a>
                 {% endif %}
                 {% for pn in paginator.page_range %}
                     {% if not forloop.first %}
                         &nbsp;&nbsp;|&nbsp;&nbsp;
                     {% endif %}
                     {% if page_obj.number != pn %}
-                        <a href="{% url 'goods:list' category.id pn %}">
+                        <a href="{% url 'goods:list' %}?cat_id={{ category.id }}{% if pn > 1 %}&page={{ pn }}{% endif %}">
                     {% endif %}
                     {{ pn }}
                     {% if page_obj.number != pn %}
@@ -32,7 +32,7 @@
                     {% endif %}
                 {% endfor %}
                 {% if page_obj.has_next %}
-                    <a href="{% url 'goods:list' category.id page_obj.next_page_number %}">&gt;</a>
+                    <a href="{% url 'goods:list' %}?cat_id={{ category.id }}&page={{ page_obj.next_page_number }}">&gt;</a>
                 {% endif %}
             </span>
         </div>

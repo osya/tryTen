@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse_lazy
 from django.views import generic
 from braces import views
 
@@ -5,37 +6,46 @@ from .models import Category, Good
 from .forms import GoodForm
 
 
-class PageCategory2ContextMixin(generic.base.ContextMixin):
+class PageCatsMixin(object):
     def get_context_data(self, **kwargs):
-        context = super(PageCategory2ContextMixin, self).get_context_data(**kwargs)
+        context = super(PageCatsMixin, self).get_context_data(**kwargs)
         context['cats'] = Category.objects.order_by('name')
-        cat_id = self.kwargs.get('cat_id')
-        context['category'] = Category.objects.get(pk=cat_id) if cat_id else Category.objects.first()
-        context['page'] = self.request.GET.get('page', 1)
+        context['page'] = self.request.GET.get('page')
         return context
 
 
-class GoodList(PageCategory2ContextMixin, generic.ListView):
+class GoodList(PageCatsMixin, generic.ListView):
     model = Good
     paginate_by = 10
+    cat_id = None
 
     def get_queryset(self):
         queryset = super(GoodList, self).get_queryset()
-        cat_id = self.kwargs.get('cat_id') or Category.objects.first().id
-        return queryset.filter(category=cat_id)
+        self.cat_id = self.request.GET.get('cat_id') or Category.objects.first().id
+        return queryset.filter(category=self.cat_id)
+
+    def get_context_data(self, **kwargs):
+        context = super(GoodList, self).get_context_data(**kwargs)
+        context['category'] = Category.objects.get(pk=self.cat_id)
+        return context
 
 
-class GoodDetail(PageCategory2ContextMixin, generic.DetailView):
+class GoodDetail(PageCatsMixin, generic.DetailView):
     model = Good
 
+    def get_context_data(self, **kwargs):
+        context = super(GoodDetail, self).get_context_data(**kwargs)
+        context['category'] = self.object.category
+        return context
 
-class GoodCreate(views.SetHeadlineMixin, generic.CreateView):
+
+class GoodCreate(views.SetHeadlineMixin, PageCatsMixin, generic.CreateView):
     model = Good
     headline = 'Add Good'
     form_class = GoodForm
 
     def get(self, request, *args, **kwargs):
-        self.initial['category'] = self.kwargs.get('pk') or Category.objects.first().id
+        self.initial['category'] = self.request.GET.get('cat_id') or Category.objects.first().id
         return super(GoodCreate, self).get(request, *args, **kwargs)
 
     def get_success_url(self):
@@ -52,7 +62,21 @@ class GoodCreate(views.SetHeadlineMixin, generic.CreateView):
 
     def get_context_data(self):
         context = super(GoodCreate, self).get_context_data()
-        cat_id = self.kwargs.get('cat_id')
-        context['category'] = Category.objects.get(pk=cat_id) if cat_id else Category.objects.first()
-        context['page'] = self.request.GET.get('page', 1)
+        context['category'] = Category.objects.get(pk=self.request.GET.get('cat_id') or Category.objects.first().id)
         return context
+
+
+class GoodUpdate(views.SetHeadlineMixin, PageCatsMixin, generic.UpdateView):
+    model = Good
+    headline = 'Update Good'
+    form_class = GoodForm
+
+    def get_context_data(self):
+        context = super(GoodUpdate, self).get_context_data()
+        context['category'] = self.object.category
+        return context
+
+
+class GoodDelete(generic.DeleteView):
+    model = Good
+    success_url = reverse_lazy('goods:list')
