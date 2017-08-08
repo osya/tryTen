@@ -5,11 +5,19 @@
         <tr>
             <th>Name</th>
             <th>In stock</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
         </tr>
         {% for good in good_list %}
             <tr>
                 <td><a href="{% url 'goods:detail' good.id %}{% if page_obj.number > 1 %}?page={{ page_obj.number }}{% endif %}">{{ good.name }}</a></td>
                 <td class="centered">{{ good.get_is_stock }}</td>
+                <td class="centered"><a href="{% url 'goods:update' pk=good.id %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a></td>
+                <td class="centered"><a href="{% url 'goods:delete' pk=good.id %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a></td>
             </tr>
         {% endfor %}
     </table>

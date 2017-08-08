@@ -1,6 +1,7 @@
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse
 from django.views import generic
 from braces import views
+from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 
 from .models import Category, Good
 from .forms import GoodForm
@@ -10,8 +11,23 @@ class PageCatsMixin(object):
     def get_context_data(self, **kwargs):
         context = super(PageCatsMixin, self).get_context_data(**kwargs)
         context['cats'] = Category.objects.order_by('name')
-        context['page'] = self.request.GET.get('page')
+        context['page'] = int(self.request.GET.get('page', 1))
         return context
+
+
+class SuccessUrlMixin(object):
+    def get_success_url(self):
+        url = reverse('goods:list')
+        url_parts = list(urlparse(url))
+        query = dict(parse_qsl(url_parts[4]))
+        cat_id = self.cat_id
+        if cat_id:
+            query['cat_id'] = cat_id
+        page = self.request.GET.get('page')
+        if page and int(page) > 1:
+            query['page'] = page
+        url_parts[4] = urlencode(query)
+        return urlunparse(url_parts)
 
 
 class GoodList(PageCatsMixin, generic.ListView):
@@ -39,44 +55,48 @@ class GoodDetail(PageCatsMixin, generic.DetailView):
         return context
 
 
-class GoodCreate(views.SetHeadlineMixin, PageCatsMixin, generic.CreateView):
+class GoodCreate(views.SetHeadlineMixin, PageCatsMixin, SuccessUrlMixin, generic.CreateView):
     model = Good
-    headline = 'Add Good'
+    headline = 'Add Good :: '
     form_class = GoodForm
 
+    @property
+    def cat_id(self):
+        return self.request.GET.get('cat_id') or Category.objects.first().id
+
     def get(self, request, *args, **kwargs):
-        self.initial['category'] = self.request.GET.get('cat_id') or Category.objects.first().id
+        self.initial['category'] = self.cat_id
         return super(GoodCreate, self).get(request, *args, **kwargs)
 
-    def get_success_url(self):
-        url = super(GoodCreate, self).get_success_url()
-        page = self.request.GET.get('page')
-        if page:
-            from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
-            url_parts = list(urlparse(url))
-            query = dict(parse_qsl(url_parts[4]))
-            query['page'] = page
-            url_parts[4] = urlencode(query)
-            url = urlunparse(url_parts)
-        return url
-
-    def get_context_data(self):
-        context = super(GoodCreate, self).get_context_data()
+    def get_context_data(self, **kwargs):
+        context = super(GoodCreate, self).get_context_data(**kwargs)
         context['category'] = Category.objects.get(pk=self.request.GET.get('cat_id') or Category.objects.first().id)
         return context
 
 
-class GoodUpdate(views.SetHeadlineMixin, PageCatsMixin, generic.UpdateView):
+class GoodUpdate(views.SetHeadlineMixin, PageCatsMixin, SuccessUrlMixin, generic.UpdateView):
     model = Good
-    headline = 'Update Good'
+    headline = 'Update Good :: '
     form_class = GoodForm
 
-    def get_context_data(self):
-        context = super(GoodUpdate, self).get_context_data()
+    @property
+    def cat_id(self):
+        return self.object.category.id
+
+    def get_context_data(self, **kwargs):
+        context = super(GoodUpdate, self).get_context_data(**kwargs)
         context['category'] = self.object.category
         return context
 
 
-class GoodDelete(generic.DeleteView):
+class GoodDelete(SuccessUrlMixin, generic.DeleteView):
     model = Good
-    success_url = reverse_lazy('goods:list')
+
+    @property
+    def cat_id(self):
+        return self.object.category.id
+
+    def get_context_data(self, **kwargs):
+        context = super(GoodDelete, self).get_context_data(**kwargs)
+        context['category'] = self.object.category
+        return context

@@ -1,13 +1,9 @@
 {% extends 'goods/base_goods.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}{{ headline }}{% endblock %}
+{% block title %}{{ headline }} :: {{ block.super }}{% endblock %}
 
-{% block headline %}
-    <div id="header">
-        <h2>{{ headline }}</h2>
-    </div>
-{% endblock headline %}
+{% block good_headline %}{{ headline }}{% endblock %}
 
 {% block main %}
     <div class='row'>

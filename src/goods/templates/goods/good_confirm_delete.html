@@ -1,8 +1,8 @@
-{% extends '_layouts/base.html' %}
+{% extends 'goods/base_goods.html' %}
 
-{% block title %}Deleting {{ object }}{% endblock %}
+{% block title %}Deleting {{ object }} :: {{ block.super }}{% endblock %}
 
-{% block headline %}<h2>Deleting {{ object }}</h2>{% endblock %}
+{% block good_headline %}Deleting {{ object }} :: {% endblock %}
 
 {% block content %}
     <div class="row">
