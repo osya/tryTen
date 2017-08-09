@@ -15,16 +15,18 @@
                 <tr>
                     <td class="col-sm-5 col-sm-offset-2"><a href="{% url 'goods:detail' good.id %}{% if page_obj.number > 1 %}?page={{ page_obj.number }}{% endif %}">{{ good.name }}</a></td>
                     <td class="centered col-sm-1">{{ good.get_in_stock }}</td>
-                    <td class="centered col-sm-1">
-                        <a href="{% url 'goods:update' pk=good.id %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </a>
-                    </td>
-                    <td class="centered col-sm-1">
-                        <a href="{% url 'goods:delete' pk=good.id %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </a>
-                    </td>
+                    {% if request.user.is_authenticated %}
+                        <td class="centered col-sm-1">
+                            <a href="{% url 'goods:update' pk=good.id %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                        </td>
+                        <td class="centered col-sm-1">
+                            <a href="{% url 'goods:delete' pk=good.id %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>

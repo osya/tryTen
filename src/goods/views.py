@@ -58,7 +58,7 @@ class GoodDetail(PageCatsMixin, generic.DetailView):
         return context
 
 
-class GoodCreate(views.SetHeadlineMixin, PageCatsMixin, SuccessUrlMixin, generic.CreateView):
+class GoodCreate(views.SetHeadlineMixin, views.LoginRequiredMixin, PageCatsMixin, SuccessUrlMixin, generic.CreateView):
     model = Good
     headline = 'Add Good :: '
     form_class = GoodForm
@@ -77,7 +77,7 @@ class GoodCreate(views.SetHeadlineMixin, PageCatsMixin, SuccessUrlMixin, generic
         return context
 
 
-class GoodUpdate(views.SetHeadlineMixin, PageCatsMixin, SuccessUrlMixin, generic.UpdateView):
+class GoodUpdate(views.SetHeadlineMixin, views.LoginRequiredMixin, PageCatsMixin, SuccessUrlMixin, generic.UpdateView):
     model = Good
     headline = 'Update Good :: '
     form_class = GoodForm
@@ -92,7 +92,7 @@ class GoodUpdate(views.SetHeadlineMixin, PageCatsMixin, SuccessUrlMixin, generic
         return context
 
 
-class GoodDelete(SuccessUrlMixin, generic.DeleteView):
+class GoodDelete(views.LoginRequiredMixin, SuccessUrlMixin, generic.DeleteView):
     model = Good
 
     @property

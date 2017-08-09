@@ -10,13 +10,13 @@ from .models import Good
 class GoodForm(forms.ModelForm):
     class Meta:
         model = Good
-        fields = ('name', 'description', 'category', 'in_stock', 'price',)
+        fields = ('name', 'description', 'category', 'in_stock', 'price', 'tags',)
 
     def __init__(self, *args, **kwargs):
         super(GoodForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-                'name', 'description', 'category', 'in_stock', 'price',
+                'name', 'description', 'category', 'in_stock', 'price', 'tags',
                 ButtonHolder(
                         Submit('submit', 'Submit', css_class='btn btn-default')
                 )

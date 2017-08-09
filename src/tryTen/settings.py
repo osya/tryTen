@@ -51,6 +51,7 @@ THIRD_PARTY_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'stripe',
+    'taggit',
 )
 LOCAL_APPS = (
     'contact',

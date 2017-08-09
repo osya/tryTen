@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+from taggit.managers import TaggableManager
 
 
 class Category(models.Model):
@@ -22,6 +23,7 @@ class Good(models.Model):
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     in_stock = models.BooleanField(default=True, db_index=True, verbose_name='In stock')
     price = models.FloatField()
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return self.name if self.in_stock else f'{self.name} (out of stock)'
