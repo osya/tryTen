@@ -1,25 +1,33 @@
 {% extends 'goods/base_goods.html' %}
 
 {% block main %}
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>In stock</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-        </tr>
-        {% for good in good_list %}
+    <table class="table">
+        <thead>
             <tr>
-                <td><a href="{% url 'goods:detail' good.id %}{% if page_obj.number > 1 %}?page={{ page_obj.number }}{% endif %}">{{ good.name }}</a></td>
-                <td class="centered">{{ good.get_is_stock }}</td>
-                <td class="centered"><a href="{% url 'goods:update' pk=good.id %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">
-                    <span class="glyphicon glyphicon-edit"></span>
-                </a></td>
-                <td class="centered"><a href="{% url 'goods:delete' pk=good.id %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </a></td>
+                <th class="centered">Name</th>
+                <th class="centered">In stock</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for good in good_list %}
+                <tr>
+                    <td class="col-sm-5 col-sm-offset-2"><a href="{% url 'goods:detail' good.id %}{% if page_obj.number > 1 %}?page={{ page_obj.number }}{% endif %}">{{ good.name }}</a></td>
+                    <td class="centered col-sm-1">{{ good.get_in_stock }}</td>
+                    <td class="centered col-sm-1">
+                        <a href="{% url 'goods:update' pk=good.id %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
+                    <td class="centered col-sm-1">
+                        <a href="{% url 'goods:delete' pk=good.id %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
     {% if is_paginated %}
         <div class="pagination">

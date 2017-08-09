@@ -29,14 +29,6 @@
 #main h2{
     margin:0 0 10px 0;
 }
-#main table{
-    width:100%;
-    border-collapse:collapse;
-}
-#main table td, #main table th{
-    border:1px #666666 solid;
-    padding: 5px;
-}
 #main table td.centered{
     text-align: center;
 }

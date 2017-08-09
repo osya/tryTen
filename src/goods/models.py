@@ -26,7 +26,7 @@ class Good(models.Model):
     def __str__(self):
         return self.name if self.in_stock else f'{self.name} (out of stock)'
 
-    def get_is_stock(self):
+    def get_in_stock(self):
         return '+' if self.in_stock else ''
 
     def get_absolute_url(self):
