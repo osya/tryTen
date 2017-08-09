@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.views import generic
+from django.views.generic.base import ContextMixin, View
 from braces import views
 from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 
@@ -7,7 +8,7 @@ from .models import Category, Good
 from .forms import GoodForm
 
 
-class PageCatsMixin(object):
+class PageCatsMixin(ContextMixin, View):
     def get_context_data(self, **kwargs):
         context = super(PageCatsMixin, self).get_context_data(**kwargs)
         context['cats'] = Category.objects.order_by('name')
@@ -15,7 +16,9 @@ class PageCatsMixin(object):
         return context
 
 
-class SuccessUrlMixin(object):
+class SuccessUrlMixin(View):
+    cat_id = None
+
     def get_success_url(self):
         url = reverse('goods:list')
         url_parts = list(urlparse(url))
