@@ -14,13 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls.static import static
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
-from profiles import views as profiles_views
-from contact import views as contact_vies
+from django.views.generic import RedirectView
+
 from checkout import views as checkout_views
-from goods import views as goods_views
+from contact import views as contact_vies
+from profiles import views as profiles_views
 from . import views
 
 urlpatterns = [
@@ -31,7 +32,7 @@ urlpatterns = [
     url(r'^checkout/$', checkout_views.CheckoutView.as_view(), name='checkout'),
     url(r'^contact/$', contact_vies.ContactView.as_view(), name='contact'),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^$', goods_views.GoodList.as_view(), name='home'),
+    url(r'^$', RedirectView.as_view(pattern_name='goods:list'), name='home'),
 ]
 
 if settings.DEBUG:

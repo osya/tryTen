@@ -1,105 +1,97 @@
+from braces import views
 from django.core.urlresolvers import reverse
 from django.views import generic
-from django.views.generic.base import ContextMixin, View
-from braces import views
-from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
+from django.views.generic.base import View, ContextMixin
 
-from .models import Category, Good
 from .forms import GoodForm
+from .models import Good, Category
 
 
-class PageCatsMixin(ContextMixin, View):
+class Cats2ContextMixin(ContextMixin):
     def get_context_data(self, **kwargs):
-        context = super(PageCatsMixin, self).get_context_data(**kwargs)
-        context['cats'] = Category.objects.order_by('name')
-        context['page'] = int(self.request.GET.get('page', 1))
+        context = super(Cats2ContextMixin, self).get_context_data(**kwargs)
+        context['cats'] = Category.objects.all()
+        return context
+
+
+class Cat2ContextMixin1(Cats2ContextMixin, View):
+    object = None
+
+    def get_context_data(self, **kwargs):
+        context = super(Cat2ContextMixin1, self).get_context_data(**kwargs)
+        context['category'] = self.object.category
+        return context
+
+
+class Cat2ContextMixin2(Cats2ContextMixin, View):
+    def get_context_data(self, **kwargs):
+        context = super(Cat2ContextMixin2, self).get_context_data(**kwargs)
+        cat_id = (self.cat_id if hasattr(self, 'cat_id') else None) or self.request.GET.get('cat_id')
+        if cat_id:
+            context['category'] = Category.objects.get(pk=cat_id)
         return context
 
 
 class SuccessUrlMixin(View):
-    cat_id = None
-
     def get_success_url(self):
         url = reverse('goods:list')
-        url_parts = list(urlparse(url))
-        query = dict(parse_qsl(url_parts[4]))
-        cat_id = self.cat_id
-        if cat_id:
-            query['cat_id'] = cat_id
-        page = self.request.GET.get('page')
-        if page and int(page) > 1:
-            query['page'] = page
-        url_parts[4] = urlencode(query)
-        return urlunparse(url_parts)
+        query = self.request.GET.urlencode()
+        if query:
+            url = f'{url}?{query}'
+        return url
 
 
-class GoodList(PageCatsMixin, generic.ListView):
+class GoodList(Cat2ContextMixin2, generic.ListView):
     model = Good
     paginate_by = 10
     cat_id = None
 
     def get_queryset(self):
         queryset = super(GoodList, self).get_queryset()
-        self.cat_id = self.request.GET.get('cat_id') or Category.objects.first().id
-        return queryset.filter(category=self.cat_id)
+        self.cat_id = self.request.GET.get('cat_id')
+        if self.cat_id:
+            queryset = queryset.filter(category__id=self.cat_id).distinct()
+        tags = self.request.GET.get('tags')
+        if tags:
+            tags = tags.split(',')
+            queryset = queryset.filter(tags__name__in=tags).distinct()
+        return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super(GoodList, self).get_context_data(**kwargs)
-        context['category'] = Category.objects.get(pk=self.cat_id)
-        return context
 
-
-class GoodDetail(PageCatsMixin, generic.DetailView):
+class GoodDetail(Cat2ContextMixin1, generic.DetailView):
     model = Good
 
-    def get_context_data(self, **kwargs):
-        context = super(GoodDetail, self).get_context_data(**kwargs)
-        context['category'] = self.object.category
-        return context
 
-
-class GoodCreate(views.SetHeadlineMixin, views.LoginRequiredMixin, PageCatsMixin, SuccessUrlMixin, generic.CreateView):
+class GoodCreate(
+        views.SetHeadlineMixin,
+        views.LoginRequiredMixin,
+        SuccessUrlMixin,
+        Cat2ContextMixin2,
+        generic.CreateView):
     model = Good
-    headline = 'Add Good :: '
+    headline = 'Add good :: '
     form_class = GoodForm
 
-    @property
-    def cat_id(self):
-        return self.request.GET.get('cat_id') or Category.objects.first().id
-
-    def get(self, request, *args, **kwargs):
-        self.initial['category'] = self.cat_id
-        return super(GoodCreate, self).get(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(GoodCreate, self).get_context_data(**kwargs)
-        context['category'] = Category.objects.get(pk=self.request.GET.get('cat_id') or Category.objects.first().id)
-        return context
+    def get_initial(self):
+        initial = super(GoodCreate, self).get_initial()
+        cat_id = self.request.GET.get('cat_id')
+        if cat_id:
+            initial['category'] = cat_id
+        if self.request.GET.get('tags'):
+            initial['tags'] = self.request.GET.get('tags')
+        return initial
 
 
-class GoodUpdate(views.SetHeadlineMixin, views.LoginRequiredMixin, PageCatsMixin, SuccessUrlMixin, generic.UpdateView):
+class GoodUpdate(
+        views.SetHeadlineMixin,
+        views.LoginRequiredMixin,
+        SuccessUrlMixin,
+        Cat2ContextMixin1,
+        generic.UpdateView):
     model = Good
-    headline = 'Update Good :: '
     form_class = GoodForm
-
-    @property
-    def cat_id(self):
-        return self.object.category.id
-
-    def get_context_data(self, **kwargs):
-        context = super(GoodUpdate, self).get_context_data(**kwargs)
-        context['category'] = self.object.category
-        return context
+    headline = 'Update good '
 
 
-class GoodDelete(views.LoginRequiredMixin, SuccessUrlMixin, generic.DeleteView):
+class GoodDelete(views.LoginRequiredMixin, SuccessUrlMixin, Cat2ContextMixin1, generic.DeleteView):
     model = Good
-
-    @property
-    def cat_id(self):
-        return self.object.category.id
-
-    def get_context_data(self, **kwargs):
-        context = super(GoodDelete, self).get_context_data(**kwargs)
-        context['category'] = self.object.category
-        return context

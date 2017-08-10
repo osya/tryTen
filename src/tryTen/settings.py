@@ -79,6 +79,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
+            'builtins': ['goods.templatetags.query_builder'],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
