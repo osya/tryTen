@@ -9,5 +9,5 @@
 {% block main %}
     <p>{{ object.description|linebreaksbr }}</p>
     <p class="not-in-stock">{% if not object.in_stock %}Out of stock!{% endif %}</p>
-    <p><a href="{% url 'goods:list' %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">Back</a></p>
+    <p><a href="{% url 'goods:list' %}?cat_id={{ category.id | urlencode }}{% if page and page > 1 %}&page={{ page | urlencode }}{% endif %}">Back</a></p>
 {% endblock %}

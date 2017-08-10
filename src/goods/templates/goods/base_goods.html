@@ -4,7 +4,7 @@
 
 {% block headline %}
     <div id="header">
-        <h2>{% block good_headline %}{% endblock %}<a href="{% url 'goods:list' %}?cat_id={{ category.id }}">{{ category.name }}</a> :: Все для уборки</h2>
+        <h2>{% block good_headline %}{% endblock %}<a href="{% url 'goods:list' %}?cat_id={{ category.id | urlencode }}">{{ category.name }}</a> :: Все для уборки</h2>
     </div>
 {% endblock %}
 
@@ -13,7 +13,7 @@
         {% if cats.count > 0 %}
             <ul>
                 {% for cat in cats %}
-                    <li><a href="{% url 'goods:list' %}?cat_id={{ cat.id }}">{{ cat.name }}</a></li>
+                    <li><a href="{% url 'goods:list' %}?cat_id={{ cat.id | urlencode }}">{{ cat.name }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}

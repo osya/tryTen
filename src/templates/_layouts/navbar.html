@@ -28,7 +28,7 @@
             {% url 'goods:list' as home %}
             {% if request.user.is_authenticated and category %}
                 <li class="active">
-                    <a href="{% url 'goods:create'%}?cat_id={{ category.id }}{% if page_obj.number > 1 %}&page={{ page_obj.number }}{% endif %}">
+                    <a href="{% url 'goods:create'%}?cat_id={{ category.id | urlencode }}{% if page_obj.number > 1 %}&page={{ page_obj.number | urlencode }}{% endif %}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Good
                     </a>
                 </li>

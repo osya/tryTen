@@ -10,7 +10,7 @@
         <div class='col-sm-6 col-sm-offset-3'>
             {% crispy form %}
             <br>
-            <p><a href="{% url 'goods:list' %}?cat_id={{ category.id }}{% if page and page > 1 %}&page={{ page }}{% endif %}">Go Back</a></p>
+            <p><a href="{% url 'goods:list' %}?cat_id={{ category.id | urlencode }}{% if page and page > 1 %}&page={{ page | urlencode }}{% endif %}">Go Back</a></p>
         </div>
     </div>
 {% endblock %}
