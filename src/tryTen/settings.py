@@ -52,6 +52,7 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount',
     'stripe',
     'taggit',
+    'taggit_selectize',
 )
 LOCAL_APPS = (
     'contact',
@@ -215,3 +216,12 @@ STRIPE_SECRET_KEY = 'sk_test_9lo0IzxbgB99DeVhqnHDljFX'
 # live keys
 # STRIPE_PUBLISHABLE_KEY = 'pk_test_yb1bFTfcnqHR3riVNGmeiO9G'
 # STRIPE_SECRET_LIVE_KEY = 'tok_1AcWMCBkd0JBg57bsJkvJYGb'
+
+# Taggit-Selectize settings
+TAGGIT_TAGS_FROM_STRING = 'taggit_selectize.utils.parse_tags'
+TAGGIT_STRING_FROM_TAGS = 'taggit_selectize.utils.join_tags'
+
+# Disable it if you need to work with taggit-selectize in django-admin
+TAGGIT_SELECTIZE = {
+    'CSS_FILENAMES': ("taggit_selectize/css/selectize.bootstrap3.css",),
+}

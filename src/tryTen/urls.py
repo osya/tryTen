@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^contact/$', contact_vies.ContactView.as_view(), name='contact'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^$', RedirectView.as_view(pattern_name='goods:list'), name='home'),
+    url(r'^taggit/', include('taggit_selectize.urls')),
 ]
 
 if settings.DEBUG:
