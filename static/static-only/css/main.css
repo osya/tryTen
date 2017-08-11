@@ -29,7 +29,7 @@
 #main h2{
     margin:0 0 10px 0;
 }
-#main table td.centered{
+#main table td.centered, th.centered{
     text-align: center;
 }
 #main p.category{
