@@ -9,5 +9,5 @@ class ProfileView(views.LoginRequiredMixin, generic.DetailView):
     form_class = ProfileForm
 
     def get_object(self):
-        profile = get_user_model().objects.get(pk=self.request.session['_auth_user_id']).profile
+        profile = get_user_model().objects.get(pk=self.request.session['_auth_user_id']).userprofile
         return ProfileForm(instance=profile)

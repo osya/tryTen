@@ -3,13 +3,13 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
 from django import forms
-from profiles.models import Profile
+from profiles.models import UserProfile
 
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         fields = ('name', 'user', 'description')
-        model = Profile
+        model = UserProfile
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)

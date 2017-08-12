@@ -1,13 +1,13 @@
 from django.contrib import admin
-from .models import Profile, userStripe
+from .models import UserProfile, userStripe
 
 
 class ProfileAdmin(admin.ModelAdmin):
     class Meta:
-        model = Profile
+        model = UserProfile
 
 
-admin.site.register(Profile, ProfileAdmin)
+admin.site.register(UserProfile, ProfileAdmin)
 
 
 class userStripeAdmin(admin.ModelAdmin):

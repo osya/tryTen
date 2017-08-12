@@ -6,10 +6,13 @@ import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-class Profile(models.Model):
+class UserProfile(models.Model):
     name = models.CharField(max_length=120)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True)
-    description = models.TextField(default='description default text')
+    description = models.TextField(max_length=100, default='')
+    city = models.CharField(max_length=100, default='')
+    website = models.URLField(default='')
+    phone_number = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -37,7 +40,7 @@ def stripe_callback(sender, request, user, **kwargs):
 
 
 def profile_callback(sender, request, user, **kwargs):
-    user_profile, is_created = Profile.objects.get_or_create(user=user)
+    user_profile, is_created = UserProfile.objects.get_or_create(user=user)
     if is_created:
         user_profile.name = user.username
         user_profile.save()
