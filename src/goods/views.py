@@ -1,5 +1,6 @@
 from braces import views
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.views import generic
 from django.views.generic.base import View, ContextMixin
 
@@ -55,6 +56,11 @@ class GoodList(Cat2ContextMixin2, generic.ListView):
         if tags:
             tags = tags.split(',')
             queryset = queryset.filter(tags__name__in=tags).distinct()
+        q = self.request.GET.get('q')
+        if q:
+            queryset = queryset.filter(
+                    Q(name__icontains=q) |
+                    Q(description__icontains=q)).distinct()
         return queryset
 
 
