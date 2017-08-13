@@ -7,6 +7,9 @@
 
 {% block content %}
     <div class="row">
+        <p>Email: {{ request.user.first_name }}</p>
+        <p>{{ request.user.last_name }}</p>
+        <p>{{ request.user.email }}</p>
         <div class="col-sm-6 col-sm-offset-3">
             {% crispy object %}
         </div>

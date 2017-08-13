@@ -7,7 +7,6 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class UserProfile(models.Model):
-    name = models.CharField(max_length=120)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True)
     description = models.TextField(max_length=100, default='')
     city = models.CharField(max_length=100, default='')
@@ -15,7 +14,7 @@ class UserProfile(models.Model):
     phone_number = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 
 class userStripe(models.Model):
