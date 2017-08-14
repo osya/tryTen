@@ -1,10 +1,10 @@
-from braces import views
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from profiles.forms import ProfileForm
 
 
-class ProfileView(views.LoginRequiredMixin, generic.DetailView):
+class ProfileView(LoginRequiredMixin, generic.DetailView):
     template_name = 'profiles/profile_detail.html'
     form_class = ProfileForm
 

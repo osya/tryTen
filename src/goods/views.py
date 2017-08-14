@@ -1,4 +1,5 @@
 from braces import views
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.views import generic
@@ -70,7 +71,7 @@ class GoodDetail(Cat2ContextMixin1, generic.DetailView):
 
 class GoodCreate(
         views.SetHeadlineMixin,
-        views.LoginRequiredMixin,
+        LoginRequiredMixin,
         SuccessUrlMixin,
         Cat2ContextMixin2,
         generic.CreateView):
@@ -90,7 +91,7 @@ class GoodCreate(
 
 class GoodUpdate(
         views.SetHeadlineMixin,
-        views.LoginRequiredMixin,
+        LoginRequiredMixin,
         SuccessUrlMixin,
         Cat2ContextMixin1,
         generic.UpdateView):
@@ -99,5 +100,5 @@ class GoodUpdate(
     headline = 'Update good '
 
 
-class GoodDelete(views.LoginRequiredMixin, SuccessUrlMixin, Cat2ContextMixin1, generic.DeleteView):
+class GoodDelete(LoginRequiredMixin, SuccessUrlMixin, Cat2ContextMixin1, generic.DeleteView):
     model = Good

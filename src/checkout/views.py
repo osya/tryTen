@@ -1,14 +1,14 @@
 import stripe
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views import generic
-from braces import views
 from checkout.forms import CheckoutForm
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-class CheckoutView(views.LoginRequiredMixin, generic.TemplateView):
+class CheckoutView(LoginRequiredMixin, generic.TemplateView):
     """
     CheckoutView based on TemplateView
     """
