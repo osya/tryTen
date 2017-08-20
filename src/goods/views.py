@@ -49,6 +49,7 @@ class GoodList(Cat2ContextMixin2, generic.ListView):
     cat_id = None
 
     def get_queryset(self):
+        # TODO: Move to Model Manager
         queryset = super(GoodList, self).get_queryset()
         self.cat_id = self.request.GET.get('cat_id')
         if self.cat_id:
