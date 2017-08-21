@@ -1,7 +1,6 @@
 from braces import views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
-from django.db.models import Q
 from django.views import generic
 from django.views.generic.base import View, ContextMixin
 
@@ -44,26 +43,10 @@ class SuccessUrlMixin(View):
 
 
 class GoodList(Cat2ContextMixin2, generic.ListView):
-    model = Good
     paginate_by = 10
-    cat_id = None
 
     def get_queryset(self):
-        # TODO: Move to Model Manager
-        queryset = super(GoodList, self).get_queryset()
-        self.cat_id = self.request.GET.get('cat_id')
-        if self.cat_id:
-            queryset = queryset.filter(category__id=self.cat_id).distinct()
-        tags = self.request.GET.get('tags')
-        if tags:
-            tags = tags.split(',')
-            queryset = queryset.filter(tags__name__in=tags).distinct()
-        q = self.request.GET.get('q')
-        if q:
-            queryset = queryset.filter(
-                    Q(name__icontains=q) |
-                    Q(description__icontains=q)).distinct()
-        return queryset
+        return Good.objects.list(self.request.GET)
 
 
 class GoodDetail(Cat2ContextMixin1, generic.DetailView):
