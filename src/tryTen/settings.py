@@ -55,9 +55,9 @@ THIRD_PARTY_APPS = (
     'taggit_selectize',
 )
 LOCAL_APPS = (
+    'profiles',
     'contact',
     'checkout',
-    'profiles',
     'goods',
 )
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -98,6 +98,8 @@ AUTHENTICATION_BACKENDS = (
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+
+AUTH_USER_MODEL = 'profiles.User'
 
 WSGI_APPLICATION = 'tryTen.wsgi.application'
 

@@ -55,7 +55,7 @@ class Good(models.Model):
         return '+' if self.in_stock else ''
 
     def get_absolute_url(self):
-        return reverse('goods:detail', kwargs={'pk': self.pk})
+        return reverse('goods:detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         if not self.slug:

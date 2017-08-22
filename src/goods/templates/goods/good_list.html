@@ -13,16 +13,16 @@
         <tbody>
             {% for good in good_list %}
                 <tr>
-                    <td class="col-sm-5 col-sm-offset-2"><a href="{% url 'goods:detail' good.id %}{% query_builder request %}">{{ good.name }}</a></td>
+                    <td class="col-sm-5 col-sm-offset-2"><a href="{% url 'goods:detail' good.slug %}{% query_builder request %}">{{ good.name }}</a></td>
                     <td class="centered col-sm-1">{{ good.get_in_stock }}</td>
                     {% if request.user.is_authenticated %}
                         <td class="centered col-sm-1">
-                            <a href="{% url 'goods:update' pk=good.id %}{% query_builder request %}">
+                            <a href="{% url 'goods:update' slug=good.slug %}{% query_builder request %}">
                                 <span class="glyphicon glyphicon-edit"></span>
                             </a>
                         </td>
                         <td class="centered col-sm-1">
-                            <a href="{% url 'goods:delete' pk=good.id %}{% query_builder request %}">
+                            <a href="{% url 'goods:delete' slug=good.slug %}{% query_builder request %}">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </td>

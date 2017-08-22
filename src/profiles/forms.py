@@ -1,26 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.contrib.auth.forms import UserChangeForm
-from django.contrib.auth.models import User
-from django import forms
-
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
+from django import forms
+from django.contrib.auth import get_user_model
 
-from profiles.models import UserProfile
 
-
-class ProfileForm(forms.ModelForm):
+class UserForm(forms.ModelForm):
     class Meta:
-        fields = ('user', 'description', 'city', 'website', 'phone_number',)
-        model = UserProfile
+        fields = ('username', 'email', 'description', 'city', 'website', 'phone_number',)
+        model = get_user_model()
 
     def __init__(self, *args, **kwargs):
-        super(ProfileForm, self).__init__(*args, **kwargs)
+        super(UserForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-                Field('name', readonly=True),
-                Field('user', readonly=True),
+                Field('username', readonly=True),
+                Field('email', readonly=True),
                 Field('description', readonly=True),
                 Field('city', readonly=True),
                 Field('website', readonly=True),

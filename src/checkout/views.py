@@ -46,7 +46,7 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
 #
 #     def form_valid(self, form):
 #         token = form.cleaned_data['stripeToken']
-#         customer_id = self.request.user.userstripe.stripe_id
+#         customer_id = self.request.user.stripe_id
 #         customer = stripe.Customer.retrieve(customer_id)
 #         customer.sources.create(source=token)
 #         # Charge the user's card:
