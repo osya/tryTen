@@ -16,6 +16,8 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+# TODO: Inherit from AbstractBaseUser
+
 
 class userStripe(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)

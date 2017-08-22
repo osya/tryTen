@@ -5,7 +5,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, ButtonHolder, Submit
 from taggit_selectize.widgets import TagSelectize
 
-from .models import Good
+from goods.models import Good
 
 
 class GoodForm(forms.ModelForm):

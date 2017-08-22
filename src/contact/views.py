@@ -1,12 +1,13 @@
+from braces.views import FormValidMessageMixin
 from django.conf import settings
-from django.core.mail import send_mail
+# from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy
-from django.views import generic
-from braces import views
-from .forms import ContactForm
+from django.views.generic import FormView
+
+from contact.forms import ContactForm
 
 
-class ContactView(views.FormValidMessageMixin, generic.FormView):
+class ContactView(FormValidMessageMixin, FormView):
     template_name = 'contact/contact.html'
     form_class = ContactForm
     form_valid_message = 'Thanks for the message. We will get right back to you'

@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, SlugField
+from django.utils.text import slugify
 from taggit_selectize.managers import TaggableManager
 
 
@@ -43,6 +44,7 @@ class Good(models.Model):
     in_stock = models.BooleanField(default=True, db_index=True, verbose_name='In stock')
     price = models.FloatField()
     tags = TaggableManager(blank=True)
+    slug = SlugField(max_length=50, unique=True)
 
     objects = GoodQuerySet.as_manager()
 
@@ -54,3 +56,8 @@ class Good(models.Model):
 
     def get_absolute_url(self):
         return reverse('goods:detail', kwargs={'pk': self.pk})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = '-'.join((slugify(self.category.name, allow_unicode=True), slugify(self.name, allow_unicode=True)))
+        super(Good, self).save(*args, **kwargs)

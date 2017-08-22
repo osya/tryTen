@@ -19,18 +19,18 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import RedirectView
 
-from checkout import views as checkout_views
-from contact import views as contact_vies
-from profiles import views as profiles_views
-from . import views
+from checkout.views import CheckoutView
+from contact.views import ContactView
+from profiles.views import ProfileView
+from tryTen.views import AboutView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^goods/', include('goods.urls', namespace='goods')),
-    url(r'^about/$', views.AboutView.as_view(), name='about'),
-    url(r'^profile/$', profiles_views.ProfileView.as_view(), name='profile'),
-    url(r'^checkout/$', checkout_views.CheckoutView.as_view(), name='checkout'),
-    url(r'^contact/$', contact_vies.ContactView.as_view(), name='contact'),
+    url(r'^about/$', AboutView.as_view(), name='about'),
+    url(r'^profile/$', ProfileView.as_view(), name='profile'),
+    url(r'^checkout/$', CheckoutView.as_view(), name='checkout'),
+    url(r'^contact/$', ContactView.as_view(), name='contact'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^$', RedirectView.as_view(pattern_name='goods:list'), name='home'),
     url(r'^taggit/', include('taggit_selectize.urls')),
@@ -43,3 +43,4 @@ if settings.DEBUG:
 # TODO: Implement 2FA & update corresponding Cover letter
 # TODO: Implement TBA using django-allauth & update corresponding Cover letter
 # TODO: Implement dependencies (Bootsrap) installation via Bower or Webpack
+# TODO: Add Travis & update corresponding Cover letter

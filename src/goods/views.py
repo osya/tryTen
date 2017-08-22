@@ -1,11 +1,11 @@
-from braces import views
+from braces.views import SetHeadlineMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
-from django.views import generic
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import View, ContextMixin
 
-from .forms import GoodForm
-from .models import Good, Category
+from goods.forms import GoodForm
+from goods.models import Category, Good
 
 
 class Cats2ContextMixin(ContextMixin):
@@ -42,23 +42,23 @@ class SuccessUrlMixin(View):
         return url
 
 
-class GoodList(Cat2ContextMixin2, generic.ListView):
+class GoodList(Cat2ContextMixin2, ListView):
     paginate_by = 10
 
     def get_queryset(self):
         return Good.objects.list(self.request.GET)
 
 
-class GoodDetail(Cat2ContextMixin1, generic.DetailView):
+class GoodDetail(Cat2ContextMixin1, DetailView):
     model = Good
 
 
 class GoodCreate(
-        views.SetHeadlineMixin,
+        SetHeadlineMixin,
         LoginRequiredMixin,
         SuccessUrlMixin,
         Cat2ContextMixin2,
-        generic.CreateView):
+        CreateView):
     model = Good
     headline = 'Add good :: '
     form_class = GoodForm
@@ -74,15 +74,15 @@ class GoodCreate(
 
 
 class GoodUpdate(
-        views.SetHeadlineMixin,
+        SetHeadlineMixin,
         LoginRequiredMixin,
         SuccessUrlMixin,
         Cat2ContextMixin1,
-        generic.UpdateView):
+        UpdateView):
     model = Good
     form_class = GoodForm
     headline = 'Update good '
 
 
-class GoodDelete(LoginRequiredMixin, SuccessUrlMixin, Cat2ContextMixin1, generic.DeleteView):
+class GoodDelete(LoginRequiredMixin, SuccessUrlMixin, Cat2ContextMixin1, DeleteView):
     model = Good

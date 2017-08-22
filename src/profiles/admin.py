@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import UserProfile, userStripe
+
+from profiles.models import UserProfile, userStripe
 
 
 class ProfileAdmin(admin.ModelAdmin):
