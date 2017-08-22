@@ -80,5 +80,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def save(self, *args, **kwargs):
         if not self.stripe_id:
-            self.stripe_id = stripe.Customer.create(email=self.email)
+            self.stripe_id = stripe.Customer.create(email=self.email).get('id')
         super(User, self).save(*args, **kwargs)
