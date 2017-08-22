@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='good',
             name='slug',
-            field=models.SlugField(blank=True, null=True),
+            field=models.SlugField(max_length=50, blank=True, null=True),
         ),
     ]

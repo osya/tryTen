@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='good',
             name='slug',
-            field=models.SlugField(default=None, unique=True),
+            field=models.SlugField(max_length=50, default=None, unique=True),
             preserve_default=False,
         ),
     ]
