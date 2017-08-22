@@ -11,3 +11,5 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/delete/$', views.GoodDelete.as_view(), name='delete'),
     url(r'^create/$', views.GoodCreate.as_view(), name='create'),
 ]
+
+# TODO: Change pk to slug in URLs
