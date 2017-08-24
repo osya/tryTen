@@ -25,6 +25,7 @@ from profiles.views import ProfileView
 from tryTen.views import AboutView
 
 urlpatterns = [
+    url(r'^$', RedirectView.as_view(pattern_name='goods:list'), name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^goods/', include('goods.urls', namespace='goods')),
     url(r'^about/$', AboutView.as_view(), name='about'),
@@ -32,8 +33,8 @@ urlpatterns = [
     url(r'^checkout/$', CheckoutView.as_view(), name='checkout'),
     url(r'^contact/$', ContactView.as_view(), name='contact'),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^$', RedirectView.as_view(pattern_name='goods:list'), name='home'),
     url(r'^taggit/', include('taggit_selectize.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 
 if settings.DEBUG:

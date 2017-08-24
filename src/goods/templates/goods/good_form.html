@@ -3,14 +3,14 @@
 
 {% block title %}{{ headline }}{% if object %}{{ object.name }} :: {% endif %}{{ block.super }}{% endblock %}
 
-{% block good_headline %}{{ headline }}{% if object %}<a href="{% url 'goods:detail' object.id %}">{{ object.name }}</a> :: {% endif %}{% endblock %}
+{% block good_headline %}{{ headline }}{% if object %}<a href="{% url 'goods:goods:detail' object.id %}">{{ object.name }}</a> :: {% endif %}{% endblock %}
 
 {% block main %}
     <div class='row'>
         <div class='col-sm-6 col-sm-offset-3'>
             {% crispy form %}
             <br>
-            <p><a href="{% url 'goods:list' %}{% query_builder request %}">Go Back</a></p>
+            <p><a href="{% url 'goods:goods:list' %}{% query_builder request %}">Go Back</a></p>
         </div>
     </div>
 {% endblock %}

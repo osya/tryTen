@@ -2,7 +2,7 @@
 
 {% block title %}Deleting good {{ object }} :: {{ block.super }}{% endblock %}
 
-{% block good_headline %}Deleting good <a href="{% url 'goods:detail' object.id %}">{{ object.name }}</a> :: {% endblock %}
+{% block good_headline %}Deleting good <a href="{% url 'goods:goods:detail' object.id %}">{{ object.name }}</a> :: {% endblock %}
 
 {% block content %}
     <div class="row">

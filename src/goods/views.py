@@ -3,9 +3,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import View, ContextMixin
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404
 
 from goods.forms import GoodForm
 from goods.models import Category, Good
+from goods.serializers import GoodSerializer, CategorySerializer
 
 
 class Cats2ContextMixin(ContextMixin):
@@ -49,8 +51,22 @@ class GoodList(Cat2ContextMixin2, ListView):
         return Good.objects.list(self.request.GET)
 
 
+class GoodListApi(ListCreateAPIView):
+    serializer_class = GoodSerializer
+
+    def get_queryset(self):
+        return Good.objects.list(self.request.GET)
+
+
 class GoodDetail(Cat2ContextMixin1, DetailView):
     model = Good
+
+
+class GoodDetailApi(RetrieveUpdateDestroyAPIView):
+    serializer_class = GoodSerializer
+
+    def get_queryset(self):
+        return Good.objects.list(self.request.GET)
 
 
 class GoodCreate(
@@ -86,3 +102,17 @@ class GoodUpdate(
 
 class GoodDelete(LoginRequiredMixin, SuccessUrlMixin, Cat2ContextMixin1, DeleteView):
     model = Good
+
+
+class CategoryListApi(ListCreateAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
+
+class CategoryDetailApi(RetrieveUpdateDestroyAPIView):
+    serializer_class = CategorySerializer
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+# TODO: Write tests for the API calls

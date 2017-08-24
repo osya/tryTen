@@ -40,7 +40,7 @@ class Good(models.Model):
 
     name = models.CharField(max_length=50, unique=True, verbose_name='Name')
     description = models.TextField()
-    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL, related_name='goods')
     in_stock = models.BooleanField(default=True, db_index=True, verbose_name='In stock')
     price = models.FloatField()
     tags = TaggableManager(blank=True)

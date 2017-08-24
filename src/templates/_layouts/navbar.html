@@ -23,7 +23,7 @@
             {% endif %}
             <li {% if request.path == about %} class="active" {% endif %}><a href="{% url 'about' %}">About</a></li>
             <li {% if request.path == contact %} class="active" {% endif %}><a href="{% url 'contact' %}">Contact</a></li>
-            <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'goods:list' %}">
+            <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'goods:goods:list' %}">
                 <div class="form-group">
                     <input type="text" class="form-control" name="q" value="">
                 </div>
@@ -31,10 +31,10 @@
             </form>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            {% url 'goods:list' as goods_list %}
+            {% url 'goods:goods:list' as goods_list %}
             {% if request.user.is_authenticated and request.path == goods_list %}
                 <li class="active">
-                    <a href="{% url 'goods:create'%}{% query_builder request %}">
+                    <a href="{% url 'goods:goods:create'%}{% query_builder request %}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Good
                     </a>
                 </li>
