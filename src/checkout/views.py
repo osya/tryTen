@@ -23,7 +23,7 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
         customer = stripe.Customer.retrieve(customer_id)
         customer.sources.create(source=token)
         # Charge the user's card:
-        charge = stripe.Charge.create(
+        stripe.Charge.create(
                 amount=1000,
                 currency="eur",
                 customer=customer,

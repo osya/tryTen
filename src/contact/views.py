@@ -1,6 +1,4 @@
 from braces.views import FormValidMessageMixin
-from django.conf import settings
-# from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import FormView
 
@@ -15,11 +13,9 @@ class ContactView(FormValidMessageMixin, FormView):
 
     def form_valid(self, form):
         response = super(ContactView, self).form_valid(form)
-        name = form.cleaned_data['name']
-        comment = form.cleaned_data['comment']
-        subject = 'Message from MYSITE.com'
-        message = '%s %s' % (comment, name)
-        email_from = form.cleaned_data['email']
-        email_to = [settings.EMAIL_HOST_USER]
+        # subject = 'Message from MYSITE.com'
+        # message = f'{form.cleaned_data["name"]} {form.cleaned_data["comment"]}'
+        # email_from = form.cleaned_data['email']
+        # email_to = [settings.EMAIL_HOST_USER]
         # send_mail(subject, message, email_from, email_to, fail_silently=False)
         return response

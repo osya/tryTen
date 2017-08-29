@@ -59,5 +59,7 @@ class Good(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = '-'.join((slugify(self.category.name, allow_unicode=True), slugify(self.name, allow_unicode=True)))
+            self.slug = '-'.join((
+                slugify(self.category.name, allow_unicode=True),
+                slugify(self.name, allow_unicode=True)))
         super(Good, self).save(*args, **kwargs)
