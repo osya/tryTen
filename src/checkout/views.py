@@ -14,7 +14,7 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(CheckoutView, self).get_context_data(**kwargs)
-        context["publish_key"] = settings.STRIPE_PUBLISHABLE_KEY
+        context['publish_key'] = settings.STRIPE_PUBLISHABLE_KEY
         return context
 
     def post(self, request, *args, **kwargs):
@@ -24,13 +24,12 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
         customer.sources.create(source=token)
         # Charge the user's card:
         stripe.Charge.create(
-                amount=1000,
-                currency="eur",
-                customer=customer,
-                description="Example charge"
+            amount=1000,
+            currency='eur',
+            customer=customer,
+            description='Example charge'
         )
         return self.get(request, *args, **kwargs)
-
 
 # class CheckoutView(LoginRequiredMixin, FormView):
 #     """

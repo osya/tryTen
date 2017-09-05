@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
 
-from goods.models import Good, Category
+from goods.models import Category, Good
 
 
 class GoodSerializer(serializers.ModelSerializer):

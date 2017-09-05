@@ -26,8 +26,8 @@ class GoodQuerySet(models.QuerySet):
         q = query_dict.get('q')
         if q:
             queryset = queryset.filter(
-                    Q(name__icontains=q) |
-                    Q(description__icontains=q)).distinct()
+                Q(name__icontains=q) |
+                Q(description__icontains=q)).distinct()
         return queryset
 
 
@@ -55,7 +55,7 @@ class Good(models.Model):
         return '+' if self.in_stock else ''
 
     def get_absolute_url(self):
-        return reverse('goods:detail', kwargs={'slug': self.slug})
+        return reverse('goods:goods:detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         if not self.slug:

@@ -5,12 +5,12 @@ import factory
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
-from django.test import TestCase, Client, RequestFactory, LiveServerTestCase
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.support.ui import Select
+from django.test import Client, LiveServerTestCase, RequestFactory, TestCase
 
 from goods.models import Category, Good
 from goods.views import GoodList
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.support.ui import Select
 
 
 def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):
@@ -21,7 +21,7 @@ class UserFactory(factory.DjangoModelFactory):
     class Meta:
         model = get_user_model()
 
-    username = factory.Sequence(lambda n: "Agent %03d" % n)
+    username = factory.Sequence(lambda n: 'Agent %03d' % n)
     email = factory.LazyAttributeSequence(lambda o, n: f'{o.username}{n}@example.com')
     password = factory.PostGenerationMethodCall('set_password')
 
@@ -97,7 +97,7 @@ class CreatePostIntegrationTest(LiveServerTestCase):
         cookie = self.client.cookies[settings.SESSION_COOKIE_NAME]
         # Replace `localhost` to 127.0.0.1 due to the WinError 10054 according to the
         # https://stackoverflow.com/a/14491845/1360307
-        self.selenium.get(f'{self.live_server_url}{reverse("goods:create")}'.replace('localhost', '127.0.0.1'))
+        self.selenium.get(f'{self.live_server_url}{reverse("goods:goods:create")}'.replace('localhost', '127.0.0.1'))
         if cookie:
             self.selenium.add_cookie({
                 'name': settings.SESSION_COOKIE_NAME,

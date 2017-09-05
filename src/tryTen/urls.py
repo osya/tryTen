@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url, include
+from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import RedirectView
@@ -25,7 +25,7 @@ from profiles.views import ProfileView
 from tryTen.views import AboutView
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(pattern_name='goods:list'), name='home'),
+    url(r'^$', RedirectView.as_view(pattern_name='goods:goods:list'), name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^goods/', include('goods.urls', namespace='goods')),
     url(r'^about/$', AboutView.as_view(), name='about'),

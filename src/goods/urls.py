@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.conf.urls import url, include
+from django.conf.urls import include, url
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from goods.views import GoodList, GoodDetail, GoodUpdate, GoodDelete, GoodCreate, GoodListApi, GoodDetailApi, \
-    CategoryListApi, CategoryDetailApi
+from goods.views import (CategoryDetailApi, CategoryListApi, GoodCreate, GoodDelete, GoodDetail, GoodDetailApi,
+                         GoodList, GoodListApi, GoodUpdate)
 
 goods_api_patterns = [
     url(r'^$', GoodListApi.as_view(), name='list'),

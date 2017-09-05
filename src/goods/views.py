@@ -1,13 +1,13 @@
 from braces.views import SetHeadlineMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.views.generic.base import View, ContextMixin
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.generic.base import ContextMixin, View
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from goods.forms import GoodForm
 from goods.models import Category, Good
-from goods.serializers import GoodSerializer, CategorySerializer
+from goods.serializers import CategorySerializer, GoodSerializer
 
 
 class Cats2ContextMixin(ContextMixin):
@@ -37,7 +37,7 @@ class Cat2ContextMixin2(Cats2ContextMixin, View):
 
 class SuccessUrlMixin(View):
     def get_success_url(self):
-        url = reverse('goods:list')
+        url = reverse('goods:goods:list')
         query = self.request.GET.urlencode()
         if query:
             url = f'{url}?{query}'
