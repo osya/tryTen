@@ -6,11 +6,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import Client, LiveServerTestCase, RequestFactory, TestCase
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.support.ui import Select
 
 from goods.models import Category, Good
 from goods.views import GoodList
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.support.ui import Select
 
 
 def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):
