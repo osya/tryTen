@@ -55,6 +55,7 @@ THIRD_PARTY_APPS = (
     'taggit',
     'taggit_selectize',
     'rest_framework',
+    'webpack_loader'
 )
 LOCAL_APPS = (
     'profiles',
@@ -162,8 +163,20 @@ STATIC_URL = '/static/'
 if DEBUG:
     MEDIA_URL = '/media/'
     STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static', 'static-only')
-    MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static', 'media')
-    STATICFILES_DIRS = (os.path.join(os.path.dirname(BASE_DIR), 'static', 'static'),)
+    STATICFILES_DIRS = (os.path.join(os.path.dirname(BASE_DIR), 'static', 'dist'),)
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'dist/',  # must end with slash
+        'STATS_FILE': os.path.join(os.path.dirname(BASE_DIR), 'static', 'dist', 'manifest.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None
+    }
+}
+# noinspection PyPep8
+from webpack_loader.utils import get_files  # noqa isort:skip
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
@@ -227,7 +240,7 @@ TAGGIT_STRING_FROM_TAGS = 'taggit_selectize.utils.join_tags'
 
 # Disable it if you need to work with taggit-selectize in django-admin
 TAGGIT_SELECTIZE = {
-    'CSS_FILENAMES': ('taggit_selectize/css/selectize.bootstrap3.css',),
+    'CSS_FILENAMES': (os.path.basename(get_files('selectize', extension='css')[0]['path']),),
 }
 
 REST_FRAMEWORK = {

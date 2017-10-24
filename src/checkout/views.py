@@ -19,7 +19,7 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         token = request.POST.get('stripeToken')
-        customer_id = request.user.userstripe.stripe_id
+        customer_id = request.user.stripe_id
         customer = stripe.Customer.retrieve(customer_id)
         customer.sources.create(source=token)
         # Charge the user's card:

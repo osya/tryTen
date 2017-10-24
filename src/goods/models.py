@@ -14,11 +14,13 @@ class Category(models.Model):
 
 
 class GoodQuerySet(models.QuerySet):
-    def list(self, query_dict={}):
+    def list(self, query_dict=None):
+        if query_dict is None:
+            query_dict = {}
         queryset = self
         cat_id = query_dict.get('cat_id')
         if cat_id:
-            queryset = queryset.filter(category__id=self.cat_id).distinct()
+            queryset = queryset.filter(category__id=cat_id).distinct()
         tags = query_dict.get('tags')
         if tags:
             tags = tags.split(',')
