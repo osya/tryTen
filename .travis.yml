@@ -9,5 +9,5 @@ install:
   - node node_modules/webpack/bin/webpack.js
 before_script: cd src
 script:
-  - python src/manage.py lint
-  - python src/manage.py test
+  - python manage.py lint
+  - python manage.py test
