@@ -136,5 +136,6 @@ ENV/
 
 db.sqlite3
 /node_modules/
-/static/dist/
 /static/static-only/
+/static/static/
+/static/manifest.json
