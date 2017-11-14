@@ -38,12 +38,12 @@
 #main p.not-in-stock{
     color:#FF0000;
 }
-#footer{
+footer{
     text-align:right;
     border-top:1px #cccccc solid;
     padding-right: 10px;
 }
-#footer p{
+footer p{
     font-size:smaller;
     font-style:italic;
 }

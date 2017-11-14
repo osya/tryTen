@@ -39,16 +39,14 @@
 
         {% block content %}{% endblock %}
 
-        <div id="footer">
-            <p>Все права принадлежат разработчикам сайта.</p>
-        </div>
-
         {% block styles %}
         {% endblock %}
     </div> <!-- /container -->
 
-
     <script src="https://js.stripe.com/v3/"></script>
     {% block script %}{% endblock %}
   </body>
+  <footer>
+    <p>Все права принадлежат разработчикам сайта.</p>
+  </footer>
 </html>
