@@ -10,7 +10,7 @@ Used technologies:
 
 Installation:
 ```
-    https://github.com/osya/tryTen
+    git clone https://github.com/osya/tryTen
     cd tryTen
     pip install -r requirements.txt
     npm install
