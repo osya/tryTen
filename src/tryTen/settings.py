@@ -13,24 +13,24 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 
 import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'valery.otryvankin@gmail.com'
-EMAIL_HOST_PASSWORD = 'aaa'
-EMAIL_PORT = '587'
-EMAIL_USE_TLS = True
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v5quzdf_waaq8)$^)udv804ap)hf1uo-=##g!p6o&8-8l=3wfg'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['tryten.herokuapp.com', '127.0.0.1']
 
@@ -225,14 +225,8 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # stripe stuff
-
-# test keys
-STRIPE_PUBLISHABLE_KEY = 'pk_test_yb1bFTfcnqHR3riVNGmeiO9G'
-STRIPE_SECRET_KEY = 'sk_test_9lo0IzxbgB99DeVhqnHDljFX'
-
-# live keys
-# STRIPE_PUBLISHABLE_KEY = 'pk_test_yb1bFTfcnqHR3riVNGmeiO9G'
-# STRIPE_SECRET_LIVE_KEY = 'tok_1AcWMCBkd0JBg57bsJkvJYGb'
+STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
 
 # Taggit-Selectize settings
 TAGGIT_TAGS_FROM_STRING = 'taggit_selectize.utils.parse_tags'

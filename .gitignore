@@ -139,3 +139,4 @@ db.sqlite3
 /static/static-only/
 /static/static/
 /static/manifest.json
+/.env

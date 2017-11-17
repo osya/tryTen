@@ -19,3 +19,4 @@ taggit-selectize==2.3.0
 django-allauth==0.34.0
 
 stripe==1.68.0
+python-decouple~=3.1
