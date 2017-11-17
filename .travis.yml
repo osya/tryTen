@@ -5,6 +5,8 @@ python:
   - 3.6
 env:
   - SECRET_KEY='dumb_secret_key_for_travis'
+  - STRIPE_PUBLISHABLE_KEY='dumb_stripe_publishable_key_for_travis'
+  - STRIPE_SECRET_KEY='dumb_stripe_secret_key_for_travis'
 before_install: npm install
 install:
   - pip install -r requirements/dev.txt
