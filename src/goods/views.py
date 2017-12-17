@@ -70,8 +70,8 @@ class GoodDetailApi(RetrieveUpdateDestroyAPIView):
 
 
 class GoodCreate(
-        SetHeadlineMixin,
         LoginRequiredMixin,
+        SetHeadlineMixin,
         SuccessUrlMixin,
         Cat2ContextMixin2,
         CreateView):
@@ -90,8 +90,8 @@ class GoodCreate(
 
 
 class GoodUpdate(
-        SetHeadlineMixin,
         LoginRequiredMixin,
+        SetHeadlineMixin,
         SuccessUrlMixin,
         Cat2ContextMixin1,
         UpdateView):
