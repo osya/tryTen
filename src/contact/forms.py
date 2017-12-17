@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import ButtonHolder, Layout, Submit
+from crispy_forms.layout import Layout, Submit
 from django import forms
 
 
@@ -17,5 +18,5 @@ class ContactForm(forms.Form):
             'name',
             'email',
             'comment',
-            ButtonHolder(Submit('submit', 'Submit', css_class='btn btn-default'))
+            FormActions(Submit('submit', 'Submit'))
         )

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import ButtonHolder, Layout, Submit
+from crispy_forms.layout import HTML, Layout, Submit
 from django import forms
 from taggit_selectize.widgets import TagSelectize
 
@@ -19,7 +20,8 @@ class GoodForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             'name', 'description', 'category', 'in_stock', 'price', 'tags',
-            ButtonHolder(
-                Submit('submit', 'Submit', css_class='btn btn-default')
+            FormActions(
+                Submit('submit', 'Submit'),
+                HTML('<a href="{% url "goods:goods:list" %}{% query_builder request %}">Go Back</a>')
             )
         )

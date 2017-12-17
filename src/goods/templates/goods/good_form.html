@@ -9,8 +9,6 @@
     <div class='row'>
         <div class='col-sm-6 col-sm-offset-3'>
             {% crispy form %}
-            <br>
-            <p><a href="{% url 'goods:goods:list' %}{% query_builder request %}">Go Back</a></p>
         </div>
     </div>
 {% endblock %}
