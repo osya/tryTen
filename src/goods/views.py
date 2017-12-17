@@ -35,15 +35,6 @@ class Cat2ContextMixin2(Cats2ContextMixin, View):
         return context
 
 
-class SuccessUrlMixin(View):
-    def get_success_url(self):
-        url = reverse('goods:goods:list')
-        query = self.request.GET.urlencode()
-        if query:
-            url = f'{url}?{query}'
-        return url
-
-
 class GoodList(Cat2ContextMixin2, ListView):
     paginate_by = 10
 
@@ -72,7 +63,6 @@ class GoodDetailApi(RetrieveUpdateDestroyAPIView):
 class GoodCreate(
         LoginRequiredMixin,
         SetHeadlineMixin,
-        SuccessUrlMixin,
         Cat2ContextMixin2,
         CreateView):
     model = Good
@@ -92,7 +82,6 @@ class GoodCreate(
 class GoodUpdate(
         LoginRequiredMixin,
         SetHeadlineMixin,
-        SuccessUrlMixin,
         Cat2ContextMixin1,
         UpdateView):
     model = Good
@@ -100,8 +89,15 @@ class GoodUpdate(
     headline = 'Update good '
 
 
-class GoodDelete(LoginRequiredMixin, SuccessUrlMixin, Cat2ContextMixin1, DeleteView):
+class GoodDelete(LoginRequiredMixin, Cat2ContextMixin1, DeleteView):
     model = Good
+
+    def get_success_url(self):
+        url = reverse('goods:goods:list')
+        query = self.request.GET.urlencode()
+        if query:
+            url = f'{url}?{query}'
+        return url
 
 
 class CategoryListApi(ListCreateAPIView):
