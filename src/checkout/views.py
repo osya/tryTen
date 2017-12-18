@@ -3,10 +3,12 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
+from goods.views import SearchFormMixin
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-class CheckoutView(LoginRequiredMixin, TemplateView):
+class CheckoutView(LoginRequiredMixin, SearchFormMixin, TemplateView):
     """
     CheckoutView based on TemplateView
     """
@@ -31,7 +33,7 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
         )
         return self.get(request, *args, **kwargs)
 
-# class CheckoutView(LoginRequiredMixin, FormView):
+# class CheckoutView(LoginRequiredMixin, SearchFormMixin, FormView):
 #     """
 #     CheckoutView based on FormView
 #     """

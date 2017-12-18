@@ -119,5 +119,5 @@ class CreatePostIntegrationTest(LiveServerTestCase):
         all_options = [o.get_attribute('value') for o in select.options]
         select.select_by_value(all_options[1])
         self.selenium.find_element_by_id('id_price').send_keys('100.0')
-        self.selenium.find_element_by_xpath('//input[@type="submit"]').click()
+        self.selenium.find_element_by_xpath('//*[@id="submit-id-submit"]').click()
         self.assertEqual(Good.objects.first().name, 'MyGoodName')

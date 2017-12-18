@@ -5,9 +5,16 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 from django.views.generic.base import ContextMixin, View
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
-from goods.forms import GoodForm
+from goods.forms import GoodForm, SearchForm
 from goods.models import Category, Good
 from goods.serializers import CategorySerializer, GoodSerializer
+
+
+class SearchFormMixin(ContextMixin, View):
+    def get_context_data(self, **kwargs):
+        context = super(SearchFormMixin, self).get_context_data(**kwargs)
+        context['search_form'] = SearchForm(self.request.GET)
+        return context
 
 
 class Cats2ContextMixin(ContextMixin):
@@ -35,7 +42,7 @@ class Cat2ContextMixin2(Cats2ContextMixin, View):
         return context
 
 
-class GoodList(Cat2ContextMixin2, ListView):
+class GoodList(SearchFormMixin, Cat2ContextMixin2, ListView):
     paginate_by = 10
 
     def get_queryset(self):
@@ -49,7 +56,7 @@ class GoodListApi(ListCreateAPIView):
         return Good.objects.list(self.request.GET)
 
 
-class GoodDetail(Cat2ContextMixin1, DetailView):
+class GoodDetail(SearchFormMixin, Cat2ContextMixin1, DetailView):
     model = Good
 
 
@@ -63,6 +70,7 @@ class GoodDetailApi(RetrieveUpdateDestroyAPIView):
 class GoodCreate(
         LoginRequiredMixin,
         SetHeadlineMixin,
+        SearchFormMixin,
         Cat2ContextMixin2,
         CreateView):
     model = Good
@@ -82,6 +90,7 @@ class GoodCreate(
 class GoodUpdate(
         LoginRequiredMixin,
         SetHeadlineMixin,
+        SearchFormMixin,
         Cat2ContextMixin1,
         UpdateView):
     model = Good
@@ -89,7 +98,7 @@ class GoodUpdate(
     headline = 'Update good '
 
 
-class GoodDelete(LoginRequiredMixin, Cat2ContextMixin1, DeleteView):
+class GoodDelete(LoginRequiredMixin, SearchFormMixin, Cat2ContextMixin1, DeleteView):
     model = Good
 
     def get_success_url(self):

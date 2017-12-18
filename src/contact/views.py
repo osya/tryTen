@@ -3,9 +3,10 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import FormView
 
 from contact.forms import ContactForm
+from goods.views import SearchFormMixin
 
 
-class ContactView(FormValidMessageMixin, FormView):
+class ContactView(SearchFormMixin, FormValidMessageMixin, FormView):
     template_name = 'contact/contact.html'
     form_class = ContactForm
     form_valid_message = 'Thanks for the message. We will get right back to you'
