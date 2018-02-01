@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.views.generic.base import ContextMixin, View
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework import permissions, viewsets
 
 from goods.forms import GoodForm, SearchForm
 from goods.models import Category, Good
@@ -49,22 +49,8 @@ class GoodList(SearchFormMixin, Cat2ContextMixin2, ListView):
         return Good.objects.list(self.request.GET)
 
 
-class GoodListApi(ListCreateAPIView):
-    serializer_class = GoodSerializer
-
-    def get_queryset(self):
-        return Good.objects.list(self.request.GET)
-
-
 class GoodDetail(SearchFormMixin, Cat2ContextMixin1, DetailView):
     model = Good
-
-
-class GoodDetailApi(RetrieveUpdateDestroyAPIView):
-    serializer_class = GoodSerializer
-
-    def get_queryset(self):
-        return Good.objects.list(self.request.GET)
 
 
 class GoodCreate(
@@ -109,15 +95,17 @@ class GoodDelete(LoginRequiredMixin, SearchFormMixin, Cat2ContextMixin1, DeleteV
         return url
 
 
-class CategoryListApi(ListCreateAPIView):
-    serializer_class = CategorySerializer
-    queryset = Category.objects.all()
-
-
-class CategoryDetailApi(RetrieveUpdateDestroyAPIView):
-    serializer_class = CategorySerializer
+class GoodViewSet(viewsets.ModelViewSet):
+    serializer_class = GoodSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get_queryset(self):
-        return Category.objects.all()
+        return Good.objects.list(self.request.GET)
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    serializer_class = CategorySerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = Category.objects.all()
 
 # TODO: Write tests for the API calls

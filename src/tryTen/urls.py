@@ -21,10 +21,12 @@ from django.views.generic import RedirectView
 
 from checkout.views import CheckoutView
 from contact.views import ContactView
+from goods.urls import router
 from profiles.views import ProfileView
 from tryTen.views import AboutView
 
 urlpatterns = [
+    url(r'^api/', include(router.urls)),
     url(r'^$', RedirectView.as_view(pattern_name='goods:goods:list'), name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^goods/', include('goods.urls', namespace='goods')),
