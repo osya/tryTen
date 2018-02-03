@@ -5,8 +5,8 @@ import string
 import factory
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.urlresolvers import reverse
-from django.test import Client, LiveServerTestCase, RequestFactory, TestCase
+from django.test import LiveServerTestCase, RequestFactory, TestCase
+from django.urls import reverse
 from selenium.webdriver.phantomjs.webdriver import WebDriver
 from selenium.webdriver.support.ui import Select
 
@@ -31,16 +31,16 @@ class CategoryFactory(factory.DjangoModelFactory):
     class Meta:
         model = Category
 
-    name = 'MyCategoryName'
-    description = 'MyCategoryDescription'
+    name = 'raw category name'
+    description = 'raw category description'
 
 
 class GoodFactory(factory.DjangoModelFactory):
     class Meta:
         model = Good
 
-    name = 'MyGoodName'
-    description = 'MyDescription'
+    name = 'raw good name'
+    description = 'raw good description'
     category = factory.SubFactory(CategoryFactory)
     in_stock = True
     price = 100.0
@@ -49,13 +49,15 @@ class GoodFactory(factory.DjangoModelFactory):
 class CategoryTests(TestCase):
     def test_str(self):
         category = CategoryFactory()
-        self.assertEqual(str(category), 'MyCategoryName')
+        self.assertEqual(1, Category.objects.count())
+        self.assertEqual('raw category name', category.name)
 
 
 class GoodTests(TestCase):
     def test_str(self):
         good = GoodFactory()
-        self.assertEqual(str(good), 'MyGoodName')
+        self.assertEqual(1, Good.objects.count())
+        self.assertEqual('raw good name', good.name)
 
 
 class GoodListViewTests(TestCase):
@@ -87,8 +89,6 @@ class CreatePostIntegrationTest(LiveServerTestCase):
                                          'lib', 'phantom', 'bin', 'phantomjs')
         ) if 'nt' == os.name else WebDriver()
         cls.password = random_string_generator()
-        cls.user = UserFactory(password=cls.password)
-        cls.client = Client()
         super(CreatePostIntegrationTest, cls).setUpClass()
 
     @classmethod
@@ -96,7 +96,25 @@ class CreatePostIntegrationTest(LiveServerTestCase):
         cls.selenium.quit()
         super(CreatePostIntegrationTest, cls).tearDownClass()
 
-    def test_create_good(self):
+    def setUp(self):
+        # `user` creation placed in setUp() rather than setUpClass(). Because when `user` created in setUpClass then
+        # `test_good_create` passed when executed separately, but failed when executed in batch
+        # TODO: investigate this magic
+        self.user = UserFactory(password=self.password)
+
+    def test_good_list(self):
+        response = self.client.get(reverse('goods:goods:list'))
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_slash(self):
+        response = self.client.get(reverse('home'))
+        self.assertIn(response.status_code, (301, 302))
+
+    def test_empty_create(self):
+        response = self.client.get(reverse('goods:goods:create'))
+        self.assertIn(response.status_code, (301, 302))
+
+    def test_good_create(self):
         self.assertTrue(self.client.login(username=self.user.username, password=self.password))
         cookie = self.client.cookies[settings.SESSION_COOKIE_NAME]
         # Replace `localhost` to 127.0.0.1 due to the WinError 10054 according to the
@@ -113,11 +131,12 @@ class CreatePostIntegrationTest(LiveServerTestCase):
             })
         CategoryFactory()
         self.selenium.refresh()  # need to update page for logged in user
-        self.selenium.find_element_by_id('id_name').send_keys('MyGoodName')
-        self.selenium.find_element_by_id('id_description').send_keys('MyDescription')
+        self.selenium.find_element_by_id('id_name').send_keys('raw good name')
+        self.selenium.find_element_by_id('id_description').send_keys('raw category description')
         select = Select(self.selenium.find_element_by_id('id_category'))
         all_options = [o.get_attribute('value') for o in select.options]
         select.select_by_value(all_options[1])
         self.selenium.find_element_by_id('id_price').send_keys('100.0')
         self.selenium.find_element_by_xpath('//*[@id="submit-id-submit"]').click()
-        self.assertEqual(Good.objects.first().name, 'MyGoodName')
+        self.assertEqual(1, Good.objects.count())
+        self.assertEqual('raw good name', Good.objects.first().name)
