@@ -69,14 +69,20 @@ class GoodListViewTests(TestCase):
         request = self.factory.get('/')
         request.user = self.user
         response = GoodList.as_view()(request)
-        self.assertEquals(list(response.context_data['object_list']), [],)
+        self.assertEquals(
+            list(response.context_data['object_list']),
+            [],
+        )
 
     def test_goods_in_context(self):
         request = self.factory.get('/')
         good = GoodFactory()
         request.user = self.user
         response = GoodList.as_view()(request)
-        self.assertEquals(list(response.context_data['object_list']), [good],)
+        self.assertEquals(
+            list(response.context_data['object_list']),
+            [good],
+        )
 
 
 class CreatePostIntegrationTest(LiveServerTestCase):
@@ -85,9 +91,9 @@ class CreatePostIntegrationTest(LiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         cls.selenium = WebDriver(
-            executable_path=os.path.join(os.path.dirname(settings.BASE_DIR), 'node_modules', 'phantomjs-prebuilt',
-                                         'lib', 'phantom', 'bin', 'phantomjs')
-        ) if 'nt' == os.name else WebDriver()
+            executable_path=os.path.join(
+                os.path.dirname(settings.BASE_DIR), 'node_modules', 'phantomjs-prebuilt', 'lib', 'phantom', 'bin',
+                'phantomjs')) if os.name == 'nt' else WebDriver()
         cls.password = random_string_generator()
         super(CreatePostIntegrationTest, cls).setUpClass()
 
@@ -140,3 +146,6 @@ class CreatePostIntegrationTest(LiveServerTestCase):
         self.selenium.find_element_by_xpath('//*[@id="submit-id-submit"]').click()
         self.assertEqual(1, Good.objects.count())
         self.assertEqual('raw good name', Good.objects.first().name)
+
+
+# TODO: Selenium support for PhantomJS has been deprecated, please use headless versions of Chrome or Firefox instead
