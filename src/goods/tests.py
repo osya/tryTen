@@ -69,7 +69,7 @@ class GoodListViewTests(TestCase):
         request = self.factory.get('/')
         request.user = self.user
         response = GoodList.as_view()(request)
-        self.assertEquals(
+        self.assertEqual(
             list(response.context_data['object_list']),
             [],
         )
@@ -79,7 +79,7 @@ class GoodListViewTests(TestCase):
         good = GoodFactory()
         request.user = self.user
         response = GoodList.as_view()(request)
-        self.assertEquals(
+        self.assertEqual(
             list(response.context_data['object_list']),
             [good],
         )
@@ -110,7 +110,7 @@ class CreatePostIntegrationTest(LiveServerTestCase):
 
     def test_good_list(self):
         response = self.client.get(reverse('goods:goods:list'))
-        self.failUnlessEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_slash(self):
         response = self.client.get(reverse('home'))

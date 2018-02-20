@@ -6,4 +6,4 @@ from django.urls import reverse
 class IntegrationTests(LiveServerTestCase):
     def test_contact_home(self):
         response = self.client.get(reverse('contact'))
-        self.failUnlessEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
