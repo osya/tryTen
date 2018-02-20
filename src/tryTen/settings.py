@@ -34,7 +34,6 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
 
-
 # Application definition
 
 DJANGO_APPS = (
@@ -45,18 +44,8 @@ DJANGO_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
-THIRD_PARTY_APPS = (
-    'crispy_forms',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'stripe',
-    'taggit',
-    'taggit_selectize',
-    'rest_framework',
-    'webpack_loader'
-)
+THIRD_PARTY_APPS = ('crispy_forms', 'django.contrib.sites', 'allauth', 'allauth.account', 'allauth.socialaccount',
+                    'stripe', 'taggit', 'taggit_selectize', 'rest_framework', 'webpack_loader')
 LOCAL_APPS = (
     'profiles',
     'contact',
@@ -107,7 +96,6 @@ AUTH_USER_MODEL = 'profiles.User'
 
 WSGI_APPLICATION = 'tryTen.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -140,7 +128,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -154,7 +141,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
@@ -163,7 +149,7 @@ STATIC_URL = '/static/'
 if DEBUG:
     MEDIA_URL = '/media/'
     STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static', 'static-only')
-    STATICFILES_DIRS = (os.path.join(os.path.dirname(BASE_DIR), 'static', 'static'),)
+    STATICFILES_DIRS = (os.path.join(os.path.dirname(BASE_DIR), 'static', 'static'), )
 
 WEBPACK_LOADER = {
     'DEFAULT': {
@@ -176,7 +162,6 @@ WEBPACK_LOADER = {
 }
 # noinspection PyPep8
 from webpack_loader.utils import get_files  # noqa isort:skip
-
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
@@ -218,7 +203,9 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
         'SCOPE': ['email'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'AUTH_PARAMS': {
+            'auth_type': 'reauthenticate'
+        },
         'METHOD': 'oauth2',
         'VERIFIED_EMAIL': False
     }
@@ -234,7 +221,7 @@ TAGGIT_STRING_FROM_TAGS = 'taggit_selectize.utils.join_tags'
 
 # Disable it if you need to work with taggit-selectize in django-admin
 TAGGIT_SELECTIZE = {
-    'CSS_FILENAMES': (os.path.basename(get_files('selectize', extension='css')[0]['path']),),
+    'CSS_FILENAMES': (os.path.basename(get_files('selectize', extension='css')[0]['path']), ),
 }
 
 REST_FRAMEWORK = {

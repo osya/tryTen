@@ -27,16 +27,21 @@ class GoodQuerySet(models.QuerySet):
             queryset = queryset.filter(tags__name__in=tags).distinct()
         query = query_dict.get('query')
         if query:
-            queryset = queryset.filter(
-                Q(name__icontains=query) |
-                Q(description__icontains=query)).distinct()
+            queryset = queryset.filter(Q(name__icontains=query) | Q(description__icontains=query)).distinct()
         return queryset
 
 
 class Good(models.Model):
     class Meta:
-        ordering = ('-price', 'name',)
-        unique_together = ('category', 'name', 'price',)
+        ordering = (
+            '-price',
+            'name',
+        )
+        unique_together = (
+            'category',
+            'name',
+            'price',
+        )
         verbose_name = 'good'
         verbose_name_plural = 'goods'
 
@@ -61,7 +66,6 @@ class Good(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = '-'.join((
-                slugify(self.category.name, allow_unicode=True),
-                slugify(self.name, allow_unicode=True)))
+            self.slug = '-'.join((slugify(self.category.name, allow_unicode=True), slugify(
+                self.name, allow_unicode=True)))
         super(Good, self).save(*args, **kwargs)

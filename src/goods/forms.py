@@ -22,19 +22,23 @@ class SearchForm(forms.Form):
         self.helper.form_class = 'navbar-form navbar-left'
         self.helper.attrs = {'role': 'search'}
         self.helper.form_method = 'GET'
-        self.helper.layout = Layout(
-            FieldWithButtons(
-                Field('query', autofocus='autofocus'),
-                Submit('', 'Search')
-            )
-        )
+        self.helper.layout = Layout(FieldWithButtons(Field('query', autofocus='autofocus'), Submit('', 'Search')))
 
 
 class GoodForm(forms.ModelForm):
     class Meta:
         model = Good
-        fields = ('name', 'description', 'category', 'in_stock', 'price', 'tags',)
-        widgets = {'tags': TagSelectize(), }
+        fields = (
+            'name',
+            'description',
+            'category',
+            'in_stock',
+            'price',
+            'tags',
+        )
+        widgets = {
+            'tags': TagSelectize(),
+        }
 
     def __init__(self, *args, **kwargs):
         super(GoodForm, self).__init__(*args, **kwargs)
@@ -43,6 +47,4 @@ class GoodForm(forms.ModelForm):
             'name', 'description', 'category', 'in_stock', 'price', 'tags',
             FormActions(
                 Submit('submit', 'Submit'),
-                HTML('<a href="{% url "goods:goods:list" %}{% query_builder request %}">Go Back</a>')
-            )
-        )
+                HTML('<a href="{% url "goods:goods:list" %}{% query_builder request %}">Go Back</a>')))

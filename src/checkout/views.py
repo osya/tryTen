@@ -25,13 +25,9 @@ class CheckoutView(LoginRequiredMixin, SearchFormMixin, TemplateView):
         customer = stripe.Customer.retrieve(customer_id)
         customer.sources.create(source=token)
         # Charge the user's card:
-        stripe.Charge.create(
-            amount=1000,
-            currency='eur',
-            customer=customer,
-            description='Example charge'
-        )
+        stripe.Charge.create(amount=1000, currency='eur', customer=customer, description='Example charge')
         return self.get(request, *args, **kwargs)
+
 
 # class CheckoutView(LoginRequiredMixin, SearchFormMixin, FormView):
 #     """

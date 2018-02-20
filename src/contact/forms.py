@@ -14,9 +14,4 @@ class ContactForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ContactForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.layout = Layout(
-            'name',
-            'email',
-            'comment',
-            FormActions(Submit('submit', 'Submit'))
-        )
+        self.helper.layout = Layout('name', 'email', 'comment', FormActions(Submit('submit', 'Submit')))

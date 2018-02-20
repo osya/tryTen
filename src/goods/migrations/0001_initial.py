@@ -10,8 +10,7 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
@@ -30,7 +29,9 @@ class Migration(migrations.Migration):
                 ('description', models.TextField()),
                 ('is_stock', models.BooleanField(db_index=True, default=True, verbose_name='In stock')),
                 ('price', models.FloatField()),
-                ('category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='goods.Category')),
+                ('category',
+                 models.ForeignKey(
+                     blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='goods.Category')),
             ],
             options={
                 'verbose_name': 'good',

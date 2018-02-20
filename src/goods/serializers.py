@@ -10,6 +10,7 @@ class GoodSerializer(serializers.ModelSerializer):
     """
         This serializer used for GoodViewSet
     """
+
     class Meta:
         model = Good
         fields = ('id', 'name', 'category', 'price')
@@ -19,6 +20,7 @@ class GoodUpdateSerializer(serializers.ModelSerializer):
     """
         This serializer used for CategorySerializer to be able to create new Goods during Category partial update
     """
+
     class Meta:
         model = Good
         # According to 'category' field, I suppose that during updating Category it will be not possible to change

@@ -53,12 +53,7 @@ class GoodDetail(SearchFormMixin, Cat2ContextMixin1, DetailView):
     model = Good
 
 
-class GoodCreate(
-        LoginRequiredMixin,
-        SetHeadlineMixin,
-        SearchFormMixin,
-        Cat2ContextMixin2,
-        CreateView):
+class GoodCreate(LoginRequiredMixin, SetHeadlineMixin, SearchFormMixin, Cat2ContextMixin2, CreateView):
     model = Good
     headline = 'Add good :: '
     form_class = GoodForm
@@ -73,12 +68,7 @@ class GoodCreate(
         return initial
 
 
-class GoodUpdate(
-        LoginRequiredMixin,
-        SetHeadlineMixin,
-        SearchFormMixin,
-        Cat2ContextMixin1,
-        UpdateView):
+class GoodUpdate(LoginRequiredMixin, SetHeadlineMixin, SearchFormMixin, Cat2ContextMixin1, UpdateView):
     model = Good
     form_class = GoodForm
     headline = 'Update good '
@@ -97,7 +87,7 @@ class GoodDelete(LoginRequiredMixin, SearchFormMixin, Cat2ContextMixin1, DeleteV
 
 class GoodViewSet(viewsets.ModelViewSet):
     serializer_class = GoodSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
     def get_queryset(self):
         return Good.objects.list(self.request.GET)
@@ -105,7 +95,8 @@ class GoodViewSet(viewsets.ModelViewSet):
 
 class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     queryset = Category.objects.all()
+
 
 # TODO: Write tests for the API calls

@@ -8,7 +8,14 @@ from django.contrib.auth import get_user_model
 
 class UserForm(forms.ModelForm):
     class Meta:
-        fields = ('username', 'email', 'description', 'city', 'website', 'phone_number',)
+        fields = (
+            'username',
+            'email',
+            'description',
+            'city',
+            'website',
+            'phone_number',
+        )
         model = get_user_model()
 
     def __init__(self, *args, **kwargs):
@@ -22,5 +29,6 @@ class UserForm(forms.ModelForm):
             Field('website', readonly=True),
             Field('phone_number', readonly=True),
         )
+
 
 # TODO: Think is it possible to use UserChangeForm for ProfileForm
