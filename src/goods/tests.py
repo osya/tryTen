@@ -18,6 +18,7 @@ def random_string_generator(size=10, chars=string.ascii_lowercase + string.digit
     return ''.join(random.choice(chars) for _ in range(size))
 
 
+# pragma pylint: disable=R0903
 class UserFactory(factory.DjangoModelFactory):
     class Meta:
         model = get_user_model()
@@ -44,6 +45,9 @@ class GoodFactory(factory.DjangoModelFactory):
     category = factory.SubFactory(CategoryFactory)
     in_stock = True
     price = 100.0
+
+
+# pragma pylint: enable=R0903
 
 
 class CategoryTests(TestCase):
