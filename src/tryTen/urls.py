@@ -18,15 +18,17 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import RedirectView
+from rest_framework.routers import DefaultRouter
 
 from checkout.views import CheckoutView
 from contact.views import ContactView
-from goods.urls import router
 from profiles.views import ProfileView
 from tryTen.views import AboutView
 
+ROUTER = DefaultRouter()
+
 urlpatterns = [
-    url(r'^api/', include(router.urls)),
+    url(r'^api/', include(ROUTER.urls)),
     url(r'^$', RedirectView.as_view(pattern_name='goods:goods:list'), name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^goods/', include('goods.urls', namespace='goods')),

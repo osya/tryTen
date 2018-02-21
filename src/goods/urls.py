@@ -1,14 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.conf.urls import include, url
-from rest_framework.routers import DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from goods.views import CategoryViewSet, GoodCreate, GoodDelete, GoodDetail, GoodList, GoodUpdate, GoodViewSet
+from tryTen.urls import ROUTER
 
 router = DefaultRouter()
 router.register(r'goods', GoodViewSet, base_name='good')
 router.register(r'categories', CategoryViewSet, base_name='category')
+
+ROUTER.register(r'goods', GoodViewSet, base_name='good')
+ROUTER.register(r'categories', CategoryViewSet, base_name='category')
 
 goods_patterns = [
     url(r'^$', GoodList.as_view(), name='list'),
