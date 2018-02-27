@@ -27,10 +27,10 @@
             {% if search_form %}{% crispy search_form %}{% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            {% url 'goods:goods:list' as goods_list %}
+            {% url 'goods:list' as goods_list %}
             {% if request.user.is_authenticated and request.path == goods_list %}
                 <li class="active">
-                    <a href="{% url 'goods:goods:create'%}{% query_builder request %}">
+                    <a href="{% url 'goods:create'%}{% query_builder request %}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Good
                     </a>
                 </li>

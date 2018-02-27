@@ -50,6 +50,7 @@ LOCAL_APPS = (
     'profiles',
     'contact',
     'checkout',
+    'categories',
     'goods',
     'core',
 )
@@ -227,5 +228,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ],
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination'
 }

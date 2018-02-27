@@ -13,16 +13,16 @@
         <tbody>
             {% for good in good_list %}
                 <tr>
-                    <td class="col-sm-5 col-sm-offset-2"><a href="{% url 'goods:goods:detail' good.slug %}{% query_builder request %}">{{ good.name }}</a></td>
+                    <td class="col-sm-5 col-sm-offset-2"><a href="{% url 'goods:detail' good.slug %}{% query_builder request %}">{{ good.name }}</a></td>
                     <td class="centered col-sm-1">{{ good.get_in_stock }}</td>
                     {% if request.user.is_authenticated %}
                         <td class="centered col-sm-1">
-                            <a href="{% url 'goods:goods:update' slug=good.slug %}{% query_builder request %}">
+                            <a href="{% url 'goods:update' slug=good.slug %}{% query_builder request %}">
                                 <span class="glyphicon glyphicon-edit"></span>
                             </a>
                         </td>
                         <td class="centered col-sm-1">
-                            <a href="{% url 'goods:goods:delete' slug=good.slug %}{% query_builder request %}">
+                            <a href="{% url 'goods:delete' slug=good.slug %}{% query_builder request %}">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </td>
@@ -35,14 +35,14 @@
         <div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
-                    <a href="{% url 'goods:goods:list' %}{% query_builder request page=page_obj.previous_page_number %}">&lt;</a>
+                    <a href="{% url 'goods:list' %}{% query_builder request page=page_obj.previous_page_number %}">&lt;</a>
                 {% endif %}
                 {% for pn in paginator.page_range %}
                     {% if not forloop.first %}
                         &nbsp;&nbsp;|&nbsp;&nbsp;
                     {% endif %}
                     {% if page_obj.number != pn %}
-                        <a href="{% url 'goods:goods:list' %}{% query_builder request page=pn %}">
+                        <a href="{% url 'goods:list' %}{% query_builder request page=pn %}">
                     {% endif %}
                     {{ pn }}
                     {% if page_obj.number != pn %}
@@ -50,7 +50,7 @@
                     {% endif %}
                 {% endfor %}
                 {% if page_obj.has_next %}
-                    <a href="{% url 'goods:goods:list' %}{% query_builder request page=page_obj.next_page_number%}">&gt;</a>
+                    <a href="{% url 'goods:list' %}{% query_builder request page=page_obj.next_page_number%}">&gt;</a>
                 {% endif %}
             </span>
         </div>

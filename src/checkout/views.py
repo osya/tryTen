@@ -1,7 +1,8 @@
-import stripe
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
+
+import stripe
 
 from goods.views import SearchFormMixin
 

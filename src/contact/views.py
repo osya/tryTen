@@ -1,6 +1,7 @@
-from braces.views import FormValidMessageMixin
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic import FormView
+
+from braces.views import FormValidMessageMixin
 
 from contact.forms import ContactForm
 from goods.views import SearchFormMixin

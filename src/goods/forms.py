@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from django import forms
+from django.urls import reverse
+
 from crispy_forms.bootstrap import FieldWithButtons, FormActions
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML, Field, Layout, Submit
-from django import forms
-from django.urls import reverse
 from taggit_selectize.widgets import TagSelectize
 
 from goods.models import Good
@@ -18,7 +19,7 @@ class SearchForm(forms.Form):
 
         self.helper = FormHelper()
         self.helper.form_show_labels = False
-        self.helper.form_action = reverse('goods:goods:list')
+        self.helper.form_action = reverse('goods:list')
         self.helper.form_class = 'navbar-form navbar-left'
         self.helper.attrs = {'role': 'search'}
         self.helper.form_method = 'GET'
@@ -47,4 +48,4 @@ class GoodForm(forms.ModelForm):
             'name', 'description', 'category', 'in_stock', 'price', 'tags',
             FormActions(
                 Submit('submit', 'Submit'),
-                HTML('<a href="{% url "goods:goods:list" %}{% query_builder request %}">Go Back</a>')))
+                HTML('<a href="{% url "goods:list" %}{% query_builder request %}">Go Back</a>')))

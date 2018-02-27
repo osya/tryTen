@@ -1,10 +1,11 @@
 import random
 import string
 
-import factory
 from django.contrib.auth import get_user_model
 from django.test import LiveServerTestCase, TestCase
 from django.urls import reverse
+
+import factory
 
 
 def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):

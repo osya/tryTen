@@ -1,4 +1,3 @@
-import stripe
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, UserManager
@@ -7,6 +6,8 @@ from django.core.mail import send_mail
 from django.db import models
 from django.utils import six, timezone
 from django.utils.translation import ugettext_lazy as _
+
+import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 

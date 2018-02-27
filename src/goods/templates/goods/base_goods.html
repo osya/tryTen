@@ -4,7 +4,7 @@
 
 {% block headline %}
     <div id="header">
-        <h2>{% block good_headline %}{% endblock %}{% if category %}<a href="{% url 'goods:goods:list' %}{% query_builder request cat_id=category.id page=None tags=None %}">{{ category.name }}</a> :: {% endif %}Все для уборки</h2>
+        <h2>{% block good_headline %}{% endblock %}{% if category %}<a href="{% url 'goods:list' %}{% query_builder request cat_id=category.id page=None tags=None %}">{{ category.name }}</a> :: {% endif %}Все для уборки</h2>
     </div>
 {% endblock %}
 
@@ -13,7 +13,7 @@
         {% if cats.count > 0 %}
             <ul>
                 {% for cat in cats %}
-                    <li><a href="{% url 'goods:goods:list' %}{% query_builder request cat_id=cat.id page=None tags=None%}">{{ cat.name }}</a></li>
+                    <li><a href="{% url 'goods:list' %}{% query_builder request cat_id=cat.id page=None tags=None%}">{{ cat.name }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}

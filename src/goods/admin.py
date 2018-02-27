@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from goods.models import Category, Good
+from goods.models import Good
 
 
 class GoodAdmin(admin.ModelAdmin):
@@ -9,5 +9,3 @@ class GoodAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Good, GoodAdmin)
-
-admin.site.register(Category)

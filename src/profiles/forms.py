@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Field, Layout
 from django import forms
 from django.contrib.auth import get_user_model
+
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Field, Layout
 
 
 class UserForm(forms.ModelForm):
