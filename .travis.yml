@@ -6,7 +6,7 @@ python:
 before_install: npm install
 install:
   - pip install -r requirements/dev.txt
-  - node node_modules/webpack/bin/webpack.js
+  - npm run webpack:deploy
 before_script: cd src
 script:
   - python manage.py lint
