@@ -1,16 +1,11 @@
-from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models import Q, SlugField
-from django.utils.text import slugify
+from django.db.models import Q
+from django.urls import reverse
+
+from autoslug import AutoSlugField
 from taggit_selectize.managers import TaggableManager
 
-
-class Category(models.Model):
-    name = models.CharField(max_length=30, unique=True)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
+from categories.models import Category
 
 
 class GoodQuerySet(models.QuerySet):
@@ -29,6 +24,10 @@ class GoodQuerySet(models.QuerySet):
         if query:
             queryset = queryset.filter(Q(name__icontains=query) | Q(description__icontains=query)).distinct()
         return queryset
+
+
+def get_slug(instance):
+    return f'{instance.category.name}-{instance.name}'
 
 
 class Good(models.Model):
@@ -51,8 +50,10 @@ class Good(models.Model):
     in_stock = models.BooleanField(default=True, db_index=True, verbose_name='In stock')
     price = models.FloatField()
     tags = TaggableManager(blank=True)
-    slug = SlugField(max_length=50, unique=True)
-
+    slug = AutoSlugField(
+        populate_from=get_slug,
+        unique=True
+    )
     objects = GoodQuerySet.as_manager()
 
     def __str__(self):
@@ -62,10 +63,4 @@ class Good(models.Model):
         return '+' if self.in_stock else ''
 
     def get_absolute_url(self):
-        return reverse('goods:goods:detail', kwargs={'slug': self.slug})
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = '-'.join((slugify(self.category.name, allow_unicode=True), slugify(
-                self.name, allow_unicode=True)))
-        super(Good, self).save(*args, **kwargs)
+        return reverse('goods:detail', kwargs={'slug': self.slug})
