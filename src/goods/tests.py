@@ -1,4 +1,3 @@
-import os
 import random
 import string
 
@@ -7,8 +6,10 @@ from django.contrib.auth import get_user_model
 from django.test import LiveServerTestCase, RequestFactory, TestCase
 from django.urls import reverse
 
+import chromedriver_binary
 import factory
-from selenium.webdriver.phantomjs.webdriver import WebDriver
+from selenium.webdriver.chrome import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 
 from categories.tests import CategoryFactory
@@ -83,11 +84,12 @@ class CreatePostIntegrationTest(LiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.selenium = WebDriver(
-            executable_path=os.path.join(
-                os.path.dirname(settings.BASE_DIR), 'node_modules',
-                'phantomjs-prebuilt', 'lib', 'phantom', 'bin',
-                'phantomjs')) if os.name == 'nt' else WebDriver()
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--log-level=3')
+        cls.selenium = webdriver.WebDriver(
+            executable_path=chromedriver_binary.chromedriver_filename,
+            chrome_options=chrome_options)
         cls.password = random_string_generator()
         super(CreatePostIntegrationTest, cls).setUpClass()
 
@@ -129,10 +131,7 @@ class CreatePostIntegrationTest(LiveServerTestCase):
                 'name': settings.SESSION_COOKIE_NAME,
                 'value': cookie.value,
                 'secure': False,
-                'path': '/',
-                # it is needed for PhantomJS due to the issue "selenium.common.exceptions.WebDriverException:
-                # Message: 'phantomjs' executable needs to be in PATH"
-                'domain': '127.0.0.1'
+                'path': '/'
             })
         CategoryFactory()
         self.selenium.refresh()  # need to update page for logged in user
@@ -147,6 +146,3 @@ class CreatePostIntegrationTest(LiveServerTestCase):
             '//*[@id="submit-id-submit"]').click()
         self.assertEqual(1, Good.objects.count())
         self.assertEqual('raw good name', Good.objects.first().name)
-
-
-# TODO: Selenium support for PhantomJS has been deprecated, please use headless versions of Chrome or Firefox instead

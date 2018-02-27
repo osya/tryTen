@@ -9,7 +9,7 @@ Django-based eCommerce project, created during the video series [Learn Python an
 Used technologies:
 
 - Python & Django
-- Testing: Selenium & PhantomJS & Factory Boy
+- Testing: Selenium & Headless Chrome & Factory Boy
 - Assets management: NPM & Webpack
 - Travis CI
 - Deployed at [Heroku](https://tryten.herokuapp.com/)
