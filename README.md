@@ -21,7 +21,7 @@ Used technologies:
     cd tryTen
     pip install -r requirements.txt
     npm install
-    npm run webpack:deploy
+    npm run build
     python manage.py collectstatic
     python manage.py runserver
 ```
