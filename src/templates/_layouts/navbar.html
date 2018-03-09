@@ -16,13 +16,11 @@
             {% url 'home' as home %}
             {% url 'profile' as profile %}
             {% url 'checkout' as goods %}
-            {% url 'about' as about %}
             {% url 'contact' as contact %}
             <li {% if request.path == home %} class="active" {% endif %}><a href="{% url 'home' %}">Home</a></li>
             {% if request.user.is_authenticated %}
                 <li {% if request.path == checkout %} class="active" {% endif %}><a href="{% url 'checkout' %}">Checkout</a></li>
             {% endif %}
-            <li {% if request.path == about %} class="active" {% endif %}><a href="{% url 'about' %}">About</a></li>
             <li {% if request.path == contact %} class="active" {% endif %}><a href="{% url 'contact' %}">Contact</a></li>
             {% if search_form %}{% crispy search_form %}{% endif %}
         </ul>

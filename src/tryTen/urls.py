@@ -25,7 +25,6 @@ from rest_framework.routers import DefaultRouter
 from checkout.views import CheckoutView
 from contact.views import ContactView
 from profiles.views import ProfileView
-from tryTen.views import AboutView
 
 ROUTER = DefaultRouter()
 
@@ -35,7 +34,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('goods/', include('goods.urls', namespace='goods')),
     path('categories/', include('categories.urls', namespace='categories')),
-    path('about/', AboutView.as_view(), name='about'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('contact/', ContactView.as_view(), name='contact'),
