@@ -5,15 +5,21 @@
 {% block good_headline %}<a href="{% url 'goods:detail' object.slug %}">{{ object.name }}</a> :: {% endblock %}
 
 {% block main %}
-    {% with names=object.tags.names %}
-        {% if names.count > 0 %}
-            <p>Tags: {% for name in names %}{% if not forloop.first %}, {% endif %}
-                <a href="{% url 'goods:list' %}{% query_builder request tags=name page=None cat_id=None %}">{{ name }}</a>
-            {% endfor %}</p>
-            <br>
-        {% endif %}
-    {% endwith %}
-    <p>{{ object.description|linebreaksbr }}</p>
-    <p class="not-in-stock">{% if not object.in_stock %}Out of stock!{% endif %}</p>
-    <p><a href="{% url 'goods:list' %}{% query_builder request %}">Back</a></p>
+    <article>
+        <header>
+            {% with names=object.tags.names %}
+                {% if names.count > 0 %}
+                    <p>Tags: {% for name in names %}{% if not forloop.first %}, {% endif %}
+                        <a href="{% url 'goods:list' %}{% query_builder request tags=name page=None cat_id=None %}">{{ name }}</a>
+                    {% endfor %}</p>
+                    <br>
+                {% endif %}
+            {% endwith %}
+        </header>
+        <p>{{ object.description|linebreaksbr }}</p>
+        <p class="not-in-stock">{% if not object.in_stock %}Out of stock!{% endif %}</p>
+        <footer>
+            <p><a href="{% url 'goods:list' %}{% query_builder request %}">Back</a></p>
+        </footer>
+    </article>
 {% endblock %}
