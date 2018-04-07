@@ -1,7 +1,7 @@
 {% extends "_layouts/base.html" %}
 
 {% block script %}
-    <script type="text/javascript">
+    <script>
         // Create a Stripe client
         // TODO: Fix warnings "Unresolved function or method .... Possibly using TypeScript stubs"
         const stripe = Stripe('{{ publish_key }}');
